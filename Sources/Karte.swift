@@ -8,36 +8,9 @@
 
 import UIKit
 import struct CoreLocation.CLLocationCoordinate2D
+import class MapKit.MKMapItem
 
 public enum Karte {
-    public enum MapsApp {
-        case appleMaps, googleMaps, transit, citymapper, navigon
-
-        var urlPrefix: String {
-            switch self {
-            case .appleMaps: return ""
-            case .googleMaps: return "googlemaps://"
-            case .transit: return "transit://"
-            case .citymapper: return "citymapper://"
-            case .navigon: return "transit://"
-            }
-        }
-
-        var name: String {
-            switch self {
-            case .appleMaps: return "Apple Maps"
-            case .googleMaps: return "Google Maps"
-            case .transit: return "Transit App"
-            case .citymapper: return "Citymapper"
-            case .navigon: return "Navigon"
-            }
-        }
-
-        static var all: [MapsApp] {
-            return [.appleMaps, .googleMaps, .transit, .citymapper, .navigon]
-        }
-    }
-
     public static func isInstalled(_ app: MapsApp) -> Bool {
         guard app != .appleMaps else {
             return true
@@ -47,17 +20,30 @@ public enum Karte {
         return UIApplication.shared.canOpenURL(url)
     }
 
-    public static func launch(app: MapsApp, forDirectionsFrom from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) {
+    public static func launch(app: MapsApp, forDirectionsFrom from: Location, to: Location, mode: Mode = .default) throws {
+        guard self.isInstalled(app) else {
+            throw Error.notInstalled
+        }
 
+        guard app != .appleMaps else {
+            MKMapItem.openMaps(with: [from, to].map{$0.mapItem}, launchOptions: try mode.appleMaps())
+            return
+        }
+
+        guard let url = URL(string: app.queryString(from: from, to: to)) else {
+            throw Error.malformedURL
+        }
+
+        UIApplication.shared.open(url, completionHandler: nil)
     }
 
-    public static func presentPicker(forDirectionsFrom from: CLLocationCoordinate2D, to: CLLocationCoordinate2D, on viewcontroller: UIViewController, title: String? = nil, message: String? = nil, style: UIAlertControllerStyle = .actionSheet) {
+    public static func presentPicker(forDirectionsFrom from: Location, to: Location, mode: Mode = .default, on viewcontroller: UIViewController, title: String? = nil, message: String? = nil, style: UIAlertControllerStyle = .actionSheet) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         MapsApp.all
             .filter(self.isInstalled)
             .map { app in
                 return UIAlertAction(title: app.name, style: .default, handler: { _ in
-                    self.launch(app: app, forDirectionsFrom: from, to: to)
+                    try? self.launch(app: app, forDirectionsFrom: from, to: to, mode: mode)
                 })
             }
             .forEach { action in
