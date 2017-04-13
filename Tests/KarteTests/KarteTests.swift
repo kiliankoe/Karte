@@ -8,16 +8,14 @@
 
 import Foundation
 import XCTest
-import Karte
+@testable import Karte
 
 class KarteTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        //// XCTAssertEqual(Karte().text, "Hello, World!")
+    func testExistenceOfMapsApps() {
+        XCTAssertEqual(Karte.MapsApp.all, [.appleMaps, .googleMaps, .transit, .citymapper, .navigon])
     }
     
     static var allTests = [
-        ("testExample", testExample),
+        ("testExistenceOfMapsApps", testExistenceOfMapsApps),
     ]
 }
