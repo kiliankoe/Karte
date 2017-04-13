@@ -9,7 +9,11 @@
 import Foundation
 
 public enum MapsApp {
-    case appleMaps, googleMaps, transit, citymapper, navigon
+    case appleMaps
+    case googleMaps
+    case transit // http://thetransitapp.com/developers
+    case citymapper
+    case navigon // http://www.navigon.com/portal/common/faq/files/NAVIGON_AppInteract.pdf
 
     static var all: [MapsApp] {
         return [.appleMaps, .googleMaps, .transit, .citymapper, .navigon]
