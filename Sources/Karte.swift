@@ -12,18 +12,13 @@ import class MapKit.MKMapItem
 
 public enum Karte {
     public static func isInstalled(_ app: MapsApp) -> Bool {
-        guard app != .appleMaps else {
-            return true
-        }
-
-        let url = URL(string: app.urlPrefix)!
+        guard app != .appleMaps else { return true }
+        guard let url = URL(string: app.urlScheme) else { return false }
         return UIApplication.shared.canOpenURL(url)
     }
 
     public static func launch(app: MapsApp, forDirectionsFrom from: Location, to: Location, mode: Mode = .default) throws {
-        guard self.isInstalled(app) else {
-            throw Error.notInstalled
-        }
+        guard self.isInstalled(app) else { throw Error.notInstalled }
 
         guard app != .appleMaps else {
             MKMapItem.openMaps(with: [from, to].map {$0.mapItem}, launchOptions: try mode.appleMaps())
