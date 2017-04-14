@@ -44,7 +44,21 @@ public enum MapsApp {
         case .appleMaps: return ""
         case .googleMaps: return "\(self.urlScheme)maps?saddr=\(from.googleMapsString)&daddr=\(to.googleMapsString)"
         case .transit: return "\(self.urlScheme)directions?from=\(from.coordString)&to=\(to.coordString)"
-        case .citymapper: return ""
+        case .citymapper:
+            var parameters = ["startcoord": from.coordString, "endcoord": to.coordString]
+            if let startName = from.name {
+                parameters["startname"] = startName
+            }
+            if let startAddress = from.address {
+                parameters["startaddress"] = startAddress
+            }
+            if let endName = to.name {
+                parameters["endname"] = endName
+            }
+            if let endAddress = to.address {
+                parameters["endaddress"] = endAddress
+            }
+            return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .navigon: return ""
         }
     }

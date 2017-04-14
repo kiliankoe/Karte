@@ -13,3 +13,12 @@ internal extension String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
 }
+
+internal extension Dictionary where Value == String {
+    var urlParameters: String {
+        return self
+            .map {"\($0)=\($1.urlQuery ?? "")"}
+            .sorted() // basically only needed so that the tests can be deterministic
+            .joined(separator: "&")
+    }
+}
