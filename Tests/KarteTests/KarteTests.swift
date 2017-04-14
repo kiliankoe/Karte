@@ -12,7 +12,7 @@ import XCTest
 
 class KarteTests: XCTestCase {
     func testExistenceOfMapsApps() {
-        XCTAssertEqual(Karte.MapsApp.all, [.appleMaps, .googleMaps, .transit, .citymapper, .navigon])
+        XCTAssertEqual(MapsApp.all.count, 5)
     }
 
     static var allTests = [
