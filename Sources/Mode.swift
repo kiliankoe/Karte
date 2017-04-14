@@ -15,7 +15,7 @@ public enum Mode {
     case driving
     case transit
 
-    func appleMaps() throws -> Dictionary<String, String> {
+    func appleMaps() throws -> [String: String] {
         switch self {
         case .default:
             return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]

@@ -26,12 +26,12 @@ public enum Karte {
         }
 
         guard app != .appleMaps else {
-            MKMapItem.openMaps(with: [from, to].map{$0.mapItem}, launchOptions: try mode.appleMaps())
+            MKMapItem.openMaps(with: [from, to].map {$0.mapItem}, launchOptions: try mode.appleMaps())
             return
         }
 
         guard let url = URL(string: app.queryString(from: from, to: to)) else {
-            throw Error.malformedURL
+            throw Error.malformedURL // There's not really a lot the user can do about this, is there?
         }
 
         UIApplication.shared.open(url, completionHandler: nil)

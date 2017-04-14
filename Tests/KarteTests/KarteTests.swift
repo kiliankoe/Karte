@@ -14,7 +14,7 @@ class KarteTests: XCTestCase {
     func testExistenceOfMapsApps() {
         XCTAssertEqual(Karte.MapsApp.all, [.appleMaps, .googleMaps, .transit, .citymapper, .navigon])
     }
-    
+
     static var allTests = [
         ("testExistenceOfMapsApps", testExistenceOfMapsApps),
     ]

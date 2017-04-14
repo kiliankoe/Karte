@@ -1,0 +1,7 @@
+disabled_rules:
+  - trailing_comma
+  - line_length
+
+identifier_name:
+  excluded:
+    - to
