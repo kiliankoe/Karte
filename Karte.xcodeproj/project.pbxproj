@@ -68,8 +68,8 @@
 				39D5B7171EA02A7000691937 /* MapsApp.swift */,
 				39D5B7151EA02A5200691937 /* Mode.swift */,
 				39D5B7111EA012D600691937 /* Location.swift */,
-				52D6D9971BEFF375002C0205 /* KarteTests.swift */,
 				39D5B7131EA01DB400691937 /* Extensions.swift */,
+				52D6D9971BEFF375002C0205 /* KarteTests.swift */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
 				52D6D97D1BEFF229002C0205 /* Products */,
 			);
