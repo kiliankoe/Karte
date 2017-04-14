@@ -26,7 +26,7 @@ public enum Karte {
         }
 
         guard let url = URL(string: app.queryString(from: from, to: to)) else {
-            throw Error.malformedURL // There's not really a lot the user can do about this, is there?
+            throw Error.malformedURL // There's not really a lot the user could do about this, is there?
         }
 
         UIApplication.shared.open(url, completionHandler: nil)
