@@ -25,7 +25,7 @@ public enum MapsApp {
         case .googleMaps: return "comgooglemaps://"
         case .transit: return "transit://"
         case .citymapper: return "citymapper://"
-        case .navigon: return "transit://"
+        case .navigon: return "navigon://"
         }
     }
 
@@ -59,7 +59,9 @@ public enum MapsApp {
                 parameters["endaddress"] = endAddress
             }
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
-        case .navigon: return ""
+        case .navigon:
+            let name = to.name ?? "Destination" // Docs are unclear about the name being omitted
+            return "\(self.urlScheme)coordinate/\(name.urlQuery ?? "")/\(to.coordinate.longitude)/\(to.coordinate.latitude)"
         }
     }
 }
