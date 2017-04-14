@@ -27,6 +27,8 @@ class KarteTests: XCTestCase {
         XCTAssertEqual(MapsApp.transit.queryString(from: anonLoc, to: namedLoc), "transit://directions?from=10.0,10.0&to=10.0,10.0")
         XCTAssertEqual(MapsApp.citymapper.queryString(from: namedLoc, to: fullLoc), "citymapper://directions?endaddress=Location%20Address&endcoord=10.0,10.0&endname=Full%20Location&startcoord=10.0,10.0&startname=Named%20Location")
         XCTAssertEqual(MapsApp.navigon.queryString(from: anonLoc, to: namedLoc), "navigon://coordinate/Named%20Location/10.0/10.0")
+        XCTAssertEqual(MapsApp.waze.queryString(from: anonLoc, to: namedLoc), "waze://?ll=10.0,10.0&navigate=yes")
+        XCTAssertEqual(MapsApp.yandex.queryString(from: anonLoc, to: namedLoc), "yandexnavi://build_route_on_map?lat_to=10.0&lon_to=10.0&lat_from=10.0&lon_from=10.0")
     }
 
     func testIsInstalled() {
