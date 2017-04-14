@@ -14,8 +14,4 @@ class KarteTests: XCTestCase {
     func testExistenceOfMapsApps() {
         XCTAssertEqual(MapsApp.all.count, 5)
     }
-
-    static var allTests = [
-        ("testExistenceOfMapsApps", testExistenceOfMapsApps),
-    ]
 }
