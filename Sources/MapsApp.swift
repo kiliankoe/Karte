@@ -15,7 +15,7 @@ public enum MapsApp {
     case citymapper
     case navigon // http://www.navigon.com/portal/common/faq/files/NAVIGON_AppInteract.pdf
 
-    static var all: [MapsApp] {
+    static var all: Set<MapsApp> {
         return [.appleMaps, .googleMaps, .transit, .citymapper, .navigon]
     }
 
