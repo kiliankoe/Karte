@@ -17,14 +17,11 @@ public enum Mode {
 
     func appleMaps() throws -> [String: String] {
         switch self {
-        case .default:
-            return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
-        case .walking:
-            return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]
-        case .driving:
-            return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-        case .transit:
-            return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeTransit]
+        case .default: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
+        case .walking: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]
+        case .driving: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        case .transit: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeTransit]
+        default: throw Error.unsupportedMode
         }
     }
 }
