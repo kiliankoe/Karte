@@ -19,7 +19,7 @@ public enum MapsApp {
         return [.appleMaps, .googleMaps, .transit, .citymapper, .navigon]
     }
 
-    var urlPrefix: String {
+    var urlScheme: String {
         switch self {
         case .googleMaps: return "comgooglemaps://"
         case .transit: return "transit://"
@@ -41,8 +41,8 @@ public enum MapsApp {
 
     func queryString(from: Location, to: Location) -> String {
         switch self {
-        case .googleMaps: return "\(self.urlPrefix)?saddr=\(from.googleMapsString)&daddr=\(to.googleMapsString)"
-        case .transit: return "\(self.urlPrefix)"
+        case .googleMaps: return "\(self.urlScheme)?saddr=\(from.googleMapsString)&daddr=\(to.googleMapsString)"
+        case .transit: return "\(self.urlScheme)directions?from=\(from.coordString)&to=\(to.coordString)"
         default: return ""
         }
     }

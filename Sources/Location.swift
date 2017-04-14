@@ -31,11 +31,15 @@ public struct Location {
         return MKMapItem(placemark: placemark)
     }
 
+    internal var coordString: String {
+        return "\(self.coordinate.latitude),\(self.coordinate.longitude)"
+    }
+
     internal var googleMapsString: String {
         if let name = name {
-            return "\(self.coordinate.latitude),\(self.coordinate.longitude)+(\(name.urlQuery ?? ""))"
+            return "\(self.coordString)+(\(name.urlQuery ?? ""))"
         } else {
-            return "\(self.coordinate.latitude),\(self.coordinate.longitude)"
+            return self.coordString
         }
     }
 }
