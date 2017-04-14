@@ -15,7 +15,11 @@ let dummyCoordinate = CLLocationCoordinate2D(latitude: 10.0, longitude: 10.0)
 
 class KarteTests: XCTestCase {
     func testExistenceOfMapsApps() {
-        XCTAssertEqual(MapsApp.all.count, 5)
+        var count = 0
+        for _ in iterateEnum(MapsApp.self) {
+            count += 1
+        }
+        XCTAssertEqual(MapsApp.all.count, count, "Please ensure that `MapsApp.all` contains all cases")
     }
 
     func testQueryStrings() {
@@ -34,5 +38,16 @@ class KarteTests: XCTestCase {
     func testIsInstalled() {
         XCTAssertTrue(Karte.isInstalled(.appleMaps))
         XCTAssertFalse(Karte.isInstalled(.googleMaps))
+    }
+}
+
+// hacky af, but thanks to http://stackoverflow.com/a/28341290/1843020
+private func iterateEnum<T: Hashable>(_: T.Type) -> AnyIterator<T> {
+    var i = 0
+    return AnyIterator {
+        let next = withUnsafeBytes(of: &i) { $0.load(as: T.self) }
+        if next.hashValue != i { return nil }
+        i += 1
+        return next
     }
 }
