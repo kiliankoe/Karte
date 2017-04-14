@@ -21,11 +21,11 @@ public enum MapsApp {
 
     var urlScheme: String {
         switch self {
+        case .appleMaps: return ""
         case .googleMaps: return "comgooglemaps://"
         case .transit: return "transit://"
         case .citymapper: return "citymapper://"
         case .navigon: return "transit://"
-        default: return ""
         }
     }
 
@@ -41,9 +41,11 @@ public enum MapsApp {
 
     func queryString(from: Location, to: Location) -> String {
         switch self {
+        case .appleMaps: return ""
         case .googleMaps: return "\(self.urlScheme)?saddr=\(from.googleMapsString)&daddr=\(to.googleMapsString)"
         case .transit: return "\(self.urlScheme)directions?from=\(from.coordString)&to=\(to.coordString)"
-        default: return ""
+        case .citymapper: return ""
+        case .navigon: return ""
         }
     }
 }
