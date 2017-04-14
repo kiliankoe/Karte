@@ -42,7 +42,7 @@ public enum MapsApp {
     func queryString(from: Location, to: Location) -> String {
         switch self {
         case .appleMaps: return ""
-        case .googleMaps: return "\(self.urlScheme)?saddr=\(from.googleMapsString)&daddr=\(to.googleMapsString)"
+        case .googleMaps: return "\(self.urlScheme)maps?saddr=\(from.googleMapsString)&daddr=\(to.googleMapsString)"
         case .transit: return "\(self.urlScheme)directions?from=\(from.coordString)&to=\(to.coordString)"
         case .citymapper: return ""
         case .navigon: return ""
