@@ -24,7 +24,9 @@ public struct Location {
 
     public var mapItem: MKMapItem {
         let placemark = MKPlacemark(coordinate: self.coordinate)
-        return MKMapItem(placemark: placemark)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = self.name
+        return mapItem
     }
 
     internal var coordString: String {
