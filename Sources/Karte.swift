@@ -44,7 +44,7 @@ public enum Karte {
             .forEach { action in
                 alert.addAction(action)
             }
-        alert.addAction(UIAlertAction(title: "", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: nil, style: .cancel, handler: nil))
         OperationQueue.main.addOperation {
             viewcontroller.present(alert, animated: true, completion: nil)
         }
