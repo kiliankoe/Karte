@@ -51,7 +51,15 @@ public enum MapsApp {
         case .appleMaps:
             return ""
         case .googleMaps:
-            return "\(self.urlScheme)maps?saddr=\(from.googleMapsString)&daddr=\(to.googleMapsString)"
+            var fromStr = from.coordString
+            if let name = from.name {
+                fromStr += "+(\(name.urlQuery ?? ""))"
+            }
+            var toStr = to.coordString
+            if let name = to.name {
+                toStr += "+(\(name.urlQuery ?? ""))"
+            }
+            return "\(self.urlScheme)maps?saddr=\(fromStr)&daddr=\(toStr)"
         case .transit:
             return "\(self.urlScheme)directions?from=\(from.coordString)&to=\(to.coordString)"
         case .citymapper:

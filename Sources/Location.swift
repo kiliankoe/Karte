@@ -34,12 +34,4 @@ public struct Location {
     internal var coordString: String {
         return "\(self.coordinate.latitude),\(self.coordinate.longitude)"
     }
-
-    internal var googleMapsString: String {
-        if let name = name {
-            return "\(self.coordString)+(\(name.urlQuery ?? ""))"
-        } else {
-            return self.coordString
-        }
-    }
 }
