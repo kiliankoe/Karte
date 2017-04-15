@@ -32,7 +32,7 @@ public enum Karte {
         UIApplication.shared.open(url, completionHandler: nil)
     }
 
-    public static func presentPicker(forDirectionsFrom from: Location? = nil, to: Location, mode: Mode = .default, on viewcontroller: UIViewController, title: String? = nil, message: String? = nil, style: UIAlertControllerStyle = .actionSheet) {
+    public static func presentPicker(forDirectionsFrom from: Location? = nil, to: Location, mode: Mode = .default, on viewcontroller: UIViewController, title: String? = nil, message: String? = nil, cancel: String = "Cancel", style: UIAlertControllerStyle = .actionSheet) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         MapsApp.all
             .filter(self.isInstalled)
@@ -44,7 +44,7 @@ public enum Karte {
             .forEach { action in
                 alert.addAction(action)
             }
-        alert.addAction(UIAlertAction(title: nil, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
         OperationQueue.main.addOperation {
             viewcontroller.present(alert, animated: true, completion: nil)
         }
