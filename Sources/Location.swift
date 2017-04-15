@@ -22,10 +22,6 @@ public struct Location {
         self.coordinate = coordinate
     }
 
-//    public static func currentLocation() -> Location {
-//
-//    }
-
     public var mapItem: MKMapItem {
         let placemark = MKPlacemark(coordinate: self.coordinate)
         return MKMapItem(placemark: placemark)

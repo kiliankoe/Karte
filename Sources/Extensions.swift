@@ -14,11 +14,17 @@ internal extension String {
     }
 }
 
-internal extension Dictionary where Value == String {
+internal extension Dictionary where Key == String, Value == String {
     var urlParameters: String {
         return self
             .map {"\($0)=\($1.urlQuery ?? "")"}
             .sorted() // basically only needed so that the tests can be deterministic
             .joined(separator: "&")
+    }
+
+    mutating func maybeAdd<T>(key: String, value: T?) {
+        if let value = value {
+            self[key] = "\(value)"
+        }
     }
 }

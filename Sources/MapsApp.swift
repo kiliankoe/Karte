@@ -46,36 +46,37 @@ public enum MapsApp {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func queryString(from: Location, to: Location) -> String {
+    func queryString(from: Location?, to: Location) -> String {
+        var parameters = [String: String]()
+
         switch self {
         case .appleMaps:
             return ""
         case .googleMaps:
-            var fromStr = from.coordString
-            if let name = from.name {
-                fromStr += "+(\(name.urlQuery ?? ""))"
+            var fromStr = from?.coordString
+            if let name = from?.name {
+                fromStr?.append("+(\(name))")
             }
+            parameters.maybeAdd(key: "saddr", value: fromStr)
+
             var toStr = to.coordString
             if let name = to.name {
-                toStr += "+(\(name.urlQuery ?? ""))"
+                toStr += "+(\(name))"
             }
-            return "\(self.urlScheme)maps?saddr=\(fromStr)&daddr=\(toStr)"
+            parameters["daddr"] = toStr
+
+            return "\(self.urlScheme)maps?\(parameters.urlParameters)"
         case .transit:
-            return "\(self.urlScheme)directions?from=\(from.coordString)&to=\(to.coordString)"
+            parameters.maybeAdd(key: "from", value: from?.coordString)
+            parameters["to"] = to.coordString
+            return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .citymapper:
-            var parameters = ["startcoord": from.coordString, "endcoord": to.coordString]
-            if let startName = from.name {
-                parameters["startname"] = startName
-            }
-            if let startAddress = from.address {
-                parameters["startaddress"] = startAddress
-            }
-            if let endName = to.name {
-                parameters["endname"] = endName
-            }
-            if let endAddress = to.address {
-                parameters["endaddress"] = endAddress
-            }
+            parameters["endcoord"] = to.coordString
+            parameters.maybeAdd(key: "startcoord", value: from?.coordString)
+            parameters.maybeAdd(key: "startname", value: from?.name)
+            parameters.maybeAdd(key: "startaddress", value: from?.address)
+            parameters.maybeAdd(key: "endname", value: to.name)
+            parameters.maybeAdd(key: "endaddress", value: to.address)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .navigon:
             let name = to.name ?? "Destination" // Docs are unclear about the name being omitted
@@ -83,7 +84,11 @@ public enum MapsApp {
         case .waze:
             return "\(self.urlScheme)?ll=\(to.coordinate.latitude),\(to.coordinate.longitude)&navigate=yes"
         case .yandex:
-            return "\(self.urlScheme)build_route_on_map?lat_to=\(to.coordinate.latitude)&lon_to=\(to.coordinate.longitude)&lat_from=\(from.coordinate.latitude)&lon_from=\(from.coordinate.longitude)"
+            parameters["lat_to"] = "\(to.coordinate.latitude)"
+            parameters["lon_to"] = "\(to.coordinate.longitude)"
+            parameters.maybeAdd(key: "lat_from", value: from?.coordinate.latitude)
+            parameters.maybeAdd(key: "lon_from", value: from?.coordinate.longitude)
+            return "\(self.urlScheme)build_route_on_map?\(parameters.urlParameters)"
         }
     }
 }
