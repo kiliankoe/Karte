@@ -17,7 +17,7 @@ public enum MapsApp {
     case waze
     case yandex
 
-    static var all: Set<MapsApp> {
+    static var all: [MapsApp] {
         return [.appleMaps, .googleMaps, .transit, .citymapper, .navigon, .waze, .yandex]
     }
 
