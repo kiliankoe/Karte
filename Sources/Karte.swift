@@ -36,6 +36,17 @@ public enum Karte {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         MapsApp.all
             .filter(self.isInstalled)
+            .filter { app in
+                // Filtering all apps that throw on the chosen mode of transport. The implementation here should work, but isn't quite ideal, since the call is
+                // invoked again below in the action handler of the UIAlertAction, where it could theoretically silently throw again and result in nothing happening.
+                // But since the action handler isn't invoked here it's kinda not possible to check if it works at this point :/
+                do {
+                    _ = try app.queryString(from: from, to: to, mode: mode)
+                } catch {
+                    return false
+                }
+                return true
+            }
             .map { app in
                 return UIAlertAction(title: app.name, style: .default, handler: { _ in
                     try? self.launch(app: app, forDirectionsFrom: from, to: to, mode: mode)
