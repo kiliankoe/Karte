@@ -57,7 +57,7 @@ public enum MapsApp {
             if let name = from?.name {
                 fromStr?.append("+(\(name))")
             }
-            parameters.maybeAdd(key: "saddr", value: fromStr)
+            parameters.maybeSet(key: "saddr", value: fromStr)
 
             var toStr = to.coordString
             if let name = to.name {
@@ -67,16 +67,16 @@ public enum MapsApp {
 
             return "\(self.urlScheme)maps?\(parameters.urlParameters)"
         case .transit:
-            parameters.maybeAdd(key: "from", value: from?.coordString)
+            parameters.maybeSet(key: "from", value: from?.coordString)
             parameters["to"] = to.coordString
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .citymapper:
             parameters["endcoord"] = to.coordString
-            parameters.maybeAdd(key: "startcoord", value: from?.coordString)
-            parameters.maybeAdd(key: "startname", value: from?.name)
-            parameters.maybeAdd(key: "startaddress", value: from?.address)
-            parameters.maybeAdd(key: "endname", value: to.name)
-            parameters.maybeAdd(key: "endaddress", value: to.address)
+            parameters.maybeSet(key: "startcoord", value: from?.coordString)
+            parameters.maybeSet(key: "startname", value: from?.name)
+            parameters.maybeSet(key: "startaddress", value: from?.address)
+            parameters.maybeSet(key: "endname", value: to.name)
+            parameters.maybeSet(key: "endaddress", value: to.address)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .navigon:
             let name = to.name ?? "Destination" // Docs are unclear about the name being omitted
@@ -86,8 +86,8 @@ public enum MapsApp {
         case .yandex:
             parameters["lat_to"] = "\(to.coordinate.latitude)"
             parameters["lon_to"] = "\(to.coordinate.longitude)"
-            parameters.maybeAdd(key: "lat_from", value: from?.coordinate.latitude)
-            parameters.maybeAdd(key: "lon_from", value: from?.coordinate.longitude)
+            parameters.maybeSet(key: "lat_from", value: from?.coordinate.latitude)
+            parameters.maybeSet(key: "lon_from", value: from?.coordinate.longitude)
             return "\(self.urlScheme)build_route_on_map?\(parameters.urlParameters)"
         }
     }

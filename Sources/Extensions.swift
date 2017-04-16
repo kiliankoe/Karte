@@ -22,7 +22,7 @@ internal extension Dictionary where Key == String, Value == String {
             .joined(separator: "&")
     }
 
-    mutating func maybeAdd<T>(key: String, value: T?) {
+    mutating func maybeSet<T>(key: String, value: T?) {
         if let value = value {
             self[key] = "\(value)"
         }
