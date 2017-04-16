@@ -10,7 +10,7 @@ import Foundation
 
 public enum MapsApp {
     case appleMaps
-    case googleMaps
+    case googleMaps // https://developers.google.com/maps/documentation/ios/urlscheme
     case transit // http://thetransitapp.com/developers
     case citymapper
     case navigon // http://www.navigon.com/portal/common/faq/files/NAVIGON_AppInteract.pdf
@@ -46,7 +46,7 @@ public enum MapsApp {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func queryString(from: Location?, to: Location) -> String {
+    func queryString(from: Location?, to: Location, mode: Mode?) throws -> String {
         var parameters = [String: String]()
 
         switch self {
@@ -64,6 +64,8 @@ public enum MapsApp {
                 toStr += "+(\(name))"
             }
             parameters["daddr"] = toStr
+
+            parameters.maybeSet(key: "directionsmode", value: try mode?.googleMaps())
 
             return "\(self.urlScheme)maps?\(parameters.urlParameters)"
         case .transit:
