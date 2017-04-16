@@ -11,22 +11,22 @@ import Foundation
 public enum MapsApp {
     case appleMaps
     case googleMaps // https://developers.google.com/maps/documentation/ios/urlscheme
-    case transit // http://thetransitapp.com/developers
     case citymapper
+    case transit // http://thetransitapp.com/developers
     case navigon // http://www.navigon.com/portal/common/faq/files/NAVIGON_AppInteract.pdf
     case waze
     case yandex
 
     static var all: [MapsApp] {
-        return [.appleMaps, .googleMaps, .transit, .citymapper, .navigon, .waze, .yandex]
+        return [.appleMaps, .googleMaps, .citymapper, .transit, .navigon, .waze, .yandex]
     }
 
     var urlScheme: String {
         switch self {
         case .appleMaps: return ""
         case .googleMaps: return "comgooglemaps://"
-        case .transit: return "transit://"
         case .citymapper: return "citymapper://"
+        case .transit: return "transit://"
         case .navigon: return "navigon://"
         case .waze: return "waze://"
         case .yandex: return "yandexnavi://"
@@ -37,8 +37,8 @@ public enum MapsApp {
         switch self {
         case .appleMaps: return "Apple Maps"
         case .googleMaps: return "Google Maps"
-        case .transit: return "Transit App"
         case .citymapper: return "Citymapper"
+        case .transit: return "Transit App"
         case .navigon: return "Navigon"
         case .waze: return "Waze"
         case .yandex: return "Yandex.Navi"
@@ -70,10 +70,6 @@ public enum MapsApp {
             parameters.maybeSet(key: "directionsmode", value: try mode?.googleMaps())
 
             return "\(self.urlScheme)maps?\(parameters.urlParameters)"
-        case .transit:
-            parameters.maybeSet(key: "from", value: from?.coordString)
-            parameters["to"] = to.coordString
-            return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .citymapper:
             parameters["endcoord"] = to.coordString
             parameters.maybeSet(key: "startcoord", value: from?.coordString)
@@ -81,6 +77,10 @@ public enum MapsApp {
             parameters.maybeSet(key: "startaddress", value: from?.address)
             parameters.maybeSet(key: "endname", value: to.name)
             parameters.maybeSet(key: "endaddress", value: to.address)
+            return "\(self.urlScheme)directions?\(parameters.urlParameters)"
+        case .transit:
+            parameters.maybeSet(key: "from", value: from?.coordString)
+            parameters["to"] = to.coordString
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .navigon:
             let name = to.name ?? "Destination" // Docs are unclear about the name being omitted
