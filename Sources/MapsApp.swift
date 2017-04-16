@@ -51,6 +51,8 @@ public enum MapsApp {
 
         switch self {
         case .appleMaps:
+            // This just needs to validate that the mode is supported by Apple Maps.
+            _ = try mode?.appleMaps()
             return ""
         case .googleMaps:
             var fromStr = from?.coordString
