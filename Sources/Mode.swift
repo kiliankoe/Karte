@@ -36,4 +36,16 @@ public enum Mode {
         default: throw Error.unsupportedMode
         }
     }
+
+    func anyOnlyTransit() throws {
+        if self != .transit {
+            throw Error.unsupportedMode
+        }
+    }
+
+    func anyOnlyDriving() throws {
+        if self != .driving {
+            throw Error.unsupportedMode
+        }
+    }
 }

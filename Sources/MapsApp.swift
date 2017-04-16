@@ -71,6 +71,7 @@ public enum MapsApp {
 
             return "\(self.urlScheme)maps?\(parameters.urlParameters)"
         case .citymapper:
+            _ = try mode?.anyOnlyTransit()
             parameters["endcoord"] = to.coordString
             parameters.maybeSet(key: "startcoord", value: from?.coordString)
             parameters.maybeSet(key: "startname", value: from?.name)
@@ -79,6 +80,7 @@ public enum MapsApp {
             parameters.maybeSet(key: "endaddress", value: to.address)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .transit:
+            _ = try mode?.anyOnlyTransit()
             parameters.maybeSet(key: "from", value: from?.coordString)
             parameters["to"] = to.coordString
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
@@ -86,6 +88,7 @@ public enum MapsApp {
             let name = to.name ?? "Destination" // Docs are unclear about the name being omitted
             return "\(self.urlScheme)coordinate/\(name.urlQuery ?? "")/\(to.coordinate.longitude)/\(to.coordinate.latitude)"
         case .waze:
+            _ = try mode?.anyOnlyDriving()
             return "\(self.urlScheme)?ll=\(to.coordinate.latitude),\(to.coordinate.longitude)&navigate=yes"
         case .yandex:
             parameters["lat_to"] = "\(to.coordinate.latitude)"
