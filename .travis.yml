@@ -6,10 +6,10 @@ before_install:
 
 script:
   - xcodebuild test -scheme Karte -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3' | xcpretty
-  # - pod lib lint
+  - pod lib lint
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  # - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email:
