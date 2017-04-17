@@ -13,15 +13,15 @@ public enum MapsApp {
     case googleMaps // https://developers.google.com/maps/documentation/ios/urlscheme
     case citymapper
     case transit // http://thetransitapp.com/developers
+    case lyft
+    case uber
     case navigon // http://www.navigon.com/portal/common/faq/files/NAVIGON_AppInteract.pdf
     case waze
     case yandex
     case moovit
-    case uber
-    case lyft
 
     static var all: [MapsApp] {
-        return [.appleMaps, .googleMaps, .citymapper, .transit, .navigon, .waze, .yandex, .moovit, .uber, .lyft]
+        return [.appleMaps, .googleMaps, .citymapper, .transit, .lyft, .uber, .navigon, .waze, .yandex, .moovit]
     }
 
     var urlScheme: String {
@@ -30,12 +30,12 @@ public enum MapsApp {
         case .googleMaps: return "comgooglemaps://"
         case .citymapper: return "citymapper://"
         case .transit: return "transit://"
+        case .lyft: return "lyft://"
+        case .uber: return "uber://"
         case .navigon: return "navigon://"
         case .waze: return "waze://"
         case .yandex: return "yandexnavi://"
         case .moovit: return "moovit://"
-        case .uber: return "uber://"
-        case .lyft: return "lyft://"
         }
     }
 
@@ -45,12 +45,12 @@ public enum MapsApp {
         case .googleMaps: return "Google Maps"
         case .citymapper: return "Citymapper"
         case .transit: return "Transit App"
+        case .lyft: return "Lyft"
+        case .uber: return "Uber"
         case .navigon: return "Navigon"
         case .waze: return "Waze"
         case .yandex: return "Yandex.Navi"
         case .moovit: return "Moovit"
-        case .uber: return "Uber"
-        case .lyft: return "Lyft"
         }
     }
 
@@ -93,6 +93,24 @@ public enum MapsApp {
             parameters.set("from", from?.coordString)
             parameters.set("to", to.coordString)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
+        case .lyft:
+            parameters.set("pickup[latitude]", from?.coordinate.latitude)
+            parameters.set("pickup[longitude]", from?.coordinate.longitude)
+            parameters.set("destination[latitude]", to.coordinate.latitude)
+            parameters.set("destination[longitude]", to.coordinate.longitude)
+            return "\(self.urlScheme)ridetype?id=lyft&\(parameters.urlParameters)"
+        case .uber:
+            parameters.set("action", "setPickup")
+            if let from = from {
+                parameters.set("pickup[latitude]", from.coordinate.latitude)
+                parameters.set("pickup[longitude]", from.coordinate.longitude)
+            } else {
+                parameters.set("pickup", "my_location")
+            }
+            parameters.set("dropoff[latitude]", to.coordinate.latitude)
+            parameters.set("dropoff[longitude]", to.coordinate.longitude)
+            parameters.set("dropoff[nickname]", to.name)
+            return "\(self.urlScheme)?\(parameters.urlParameters)"
         case .navigon:
             let name = to.name ?? "Destination" // Docs are unclear about the name being omitted
             return "\(self.urlScheme)coordinate/\(name.urlQuery ?? "")/\(to.coordinate.longitude)/\(to.coordinate.latitude)"
@@ -113,24 +131,6 @@ public enum MapsApp {
             parameters.set("dest_lon", to.coordinate.longitude)
             parameters.set("dest_name", to.name)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
-        case .uber:
-            parameters.set("action", "setPickup")
-            if let from = from {
-                parameters.set("pickup[latitude]", from.coordinate.latitude)
-                parameters.set("pickup[longitude]", from.coordinate.longitude)
-            } else {
-                parameters.set("pickup", "my_location")
-            }
-            parameters.set("dropoff[latitude]", to.coordinate.latitude)
-            parameters.set("dropoff[longitude]", to.coordinate.longitude)
-            parameters.set("dropoff[nickname]", to.name)
-            return "\(self.urlScheme)?\(parameters.urlParameters)"
-        case .lyft:
-            parameters.set("pickup[latitude]", from?.coordinate.latitude)
-            parameters.set("pickup[longitude]", from?.coordinate.longitude)
-            parameters.set("destination[latitude]", to.coordinate.latitude)
-            parameters.set("destination[longitude]", to.coordinate.longitude)
-            return "\(self.urlScheme)ridetype?id=lyft&\(parameters.urlParameters)"
         }
     }
 }
