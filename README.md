@@ -10,7 +10,7 @@ Check if an app is installed.
 
 ```swift
 if Karte.isInstalled(.citymapper) {
-	print("Citymapper is installed 🎉")
+    print("Citymapper is installed 🎉")
 }
 ```
 
@@ -42,17 +42,17 @@ The section to add to your `Info.plist` should look like this:
 
 ```xml
 <key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>comgooglemaps</string>
-		<string>transit</string>
-		<string>citymapper</string>
-		<string>navigon</string>
-		<string>waze</string>
-		<string>yandexnavi</string>
-		<string>moovit</string>
-		<string>uber</string>
-		<string>lyft</string>
-	</array>
+    <array>
+        <string>comgooglemaps</string>
+        <string>transit</string>
+        <string>citymapper</string>
+        <string>navigon</string>
+        <string>waze</string>
+        <string>yandexnavi</string>
+        <string>moovit</string>
+        <string>uber</string>
+        <string>lyft</string>
+    </array>
 ```
 
 
