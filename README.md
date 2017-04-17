@@ -4,6 +4,7 @@ Small library for opening a location or route in other popular iOS map apps.
 
 Currently supported are Apple Maps, Google Maps, Citymapper, Transit, Lyft, Uber, Navigon, Waze, Yandex.Navi and Moovit.
 
+Know of any other navigation apps that can be opened via URL scheme or universal link? Please open an issue and/or PR 🙃
 
 
 ## Quick Start
