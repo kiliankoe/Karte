@@ -42,7 +42,6 @@ public enum Mode {
             case .driving: return "driving"
             case .transit: return "transit"
             case .taxi: return "driving" // just like Apple Maps this actually is supported, but the key isn't specified in the docs... meh.
-            default: throw Error.unsupportedMode
             }
         case .citymapper, .transit:
             if self != .transit {
