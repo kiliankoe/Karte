@@ -68,30 +68,30 @@ public enum MapsApp {
             if let name = from?.name {
                 fromStr?.append("+(\(name))")
             }
-            parameters.maybeSet(key: "saddr", value: fromStr)
+            parameters.set("saddr", fromStr)
 
             var toStr = to.coordString
             if let name = to.name {
                 toStr += "+(\(name))"
             }
-            parameters["daddr"] = toStr
+            parameters.set("daddr", toStr)
 
-            parameters.maybeSet(key: "directionsmode", value: try mode?.googleMaps())
+            parameters.set("directionsmode", try mode?.googleMaps())
 
             return "\(self.urlScheme)maps?\(parameters.urlParameters)"
         case .citymapper:
             _ = try mode?.anyOnlyTransit()
-            parameters["endcoord"] = to.coordString
-            parameters.maybeSet(key: "startcoord", value: from?.coordString)
-            parameters.maybeSet(key: "startname", value: from?.name)
-            parameters.maybeSet(key: "startaddress", value: from?.address)
-            parameters.maybeSet(key: "endname", value: to.name)
-            parameters.maybeSet(key: "endaddress", value: to.address)
+            parameters.set("endcoord", to.coordString)
+            parameters.set("startcoord", from?.coordString)
+            parameters.set("startname", from?.name)
+            parameters.set("startaddress", from?.address)
+            parameters.set("endname", to.name)
+            parameters.set("endaddress", to.address)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .transit:
             _ = try mode?.anyOnlyTransit()
-            parameters.maybeSet(key: "from", value: from?.coordString)
-            parameters["to"] = to.coordString
+            parameters.set("from", from?.coordString)
+            parameters.set("to", to.coordString)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .navigon:
             let name = to.name ?? "Destination" // Docs are unclear about the name being omitted
@@ -100,36 +100,36 @@ public enum MapsApp {
             _ = try mode?.anyOnlyDriving()
             return "\(self.urlScheme)?ll=\(to.coordinate.latitude),\(to.coordinate.longitude)&navigate=yes"
         case .yandex:
-            parameters["lat_to"] = "\(to.coordinate.latitude)"
-            parameters["lon_to"] = "\(to.coordinate.longitude)"
-            parameters.maybeSet(key: "lat_from", value: from?.coordinate.latitude)
-            parameters.maybeSet(key: "lon_from", value: from?.coordinate.longitude)
+            parameters.set("lat_from", from?.coordinate.latitude)
+            parameters.set("lon_from", from?.coordinate.longitude)
+            parameters.set("lat_to", to.coordinate.latitude)
+            parameters.set("lon_to", to.coordinate.longitude)
             return "\(self.urlScheme)build_route_on_map?\(parameters.urlParameters)"
         case .moovit:
-            parameters["dest_lat"] = "\(to.coordinate.latitude)"
-            parameters["dest_lon"] = "\(to.coordinate.longitude)"
-            parameters.maybeSet(key: "dest_name", value: to.name)
-            parameters.maybeSet(key: "origin_lat", value: from?.coordinate.latitude)
-            parameters.maybeSet(key: "origin_lon", value: from?.coordinate.longitude)
-            parameters.maybeSet(key: "orig_name", value: from?.name)
+            parameters.set("origin_lat", from?.coordinate.latitude)
+            parameters.set("origin_lon", from?.coordinate.longitude)
+            parameters.set("orig_name", from?.name)
+            parameters.set("dest_lat", to.coordinate.latitude)
+            parameters.set("dest_lon", to.coordinate.longitude)
+            parameters.set("dest_name", to.name)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .uber:
-            parameters["action"] = "setPickup"
+            parameters.set("action", "setPickup")
             if let from = from {
-                parameters["pickup[latitude]"] = "\(from.coordinate.latitude)"
-                parameters["pickup[longitude]"] = "\(from.coordinate.longitude)"
+                parameters.set("pickup[latitude]", from.coordinate.latitude)
+                parameters.set("pickup[longitude]", from.coordinate.longitude)
             } else {
-                parameters["pickup"] = "my_location"
+                parameters.set("pickup", "my_location")
             }
-            parameters["dropoff[latitude]"] = "\(to.coordinate.latitude)"
-            parameters["dropoff[longitude]"] = "\(to.coordinate.longitude)"
-            parameters.maybeSet(key: "dropoff[nickname]", value: to.name)
+            parameters.set("dropoff[latitude]", to.coordinate.latitude)
+            parameters.set("dropoff[longitude]", to.coordinate.longitude)
+            parameters.set("dropoff[nickname]", to.name)
             return "\(self.urlScheme)?\(parameters.urlParameters)"
         case .lyft:
-            parameters["destination[latitude]"] = "\(to.coordinate.latitude)"
-            parameters["destination[longitude]"] = "\(to.coordinate.longitude)"
-            parameters.maybeSet(key: "pickup[latitude]", value: from?.coordinate.latitude)
-            parameters.maybeSet(key: "pickup[longitude]", value: from?.coordinate.longitude)
+            parameters.set("pickup[latitude]", from?.coordinate.latitude)
+            parameters.set("pickup[longitude]", from?.coordinate.longitude)
+            parameters.set("destination[latitude]", to.coordinate.latitude)
+            parameters.set("destination[longitude]", to.coordinate.longitude)
             return "\(self.urlScheme)ridetype?id=lyft&\(parameters.urlParameters)"
         }
     }
