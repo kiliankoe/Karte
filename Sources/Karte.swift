@@ -27,7 +27,7 @@ public enum Karte {
             } else {
                 modeVal = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
             }
-            MKMapItem.openMaps(with: [origin, destination].flatMap {$0}.map {$0.mapItem}, launchOptions: modeVal)
+            MKMapItem.openMaps(with: [origin, destination].flatMap {$0?.mapItem}, launchOptions: modeVal)
             return
         }
 
