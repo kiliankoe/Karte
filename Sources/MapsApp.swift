@@ -17,9 +17,10 @@ public enum MapsApp {
     case waze
     case yandex
     case moovit
+    case uber
 
     static var all: [MapsApp] {
-        return [.appleMaps, .googleMaps, .citymapper, .transit, .navigon, .waze, .yandex, .moovit]
+        return [.appleMaps, .googleMaps, .citymapper, .transit, .navigon, .waze, .yandex, .moovit, .uber]
     }
 
     var urlScheme: String {
@@ -32,6 +33,7 @@ public enum MapsApp {
         case .waze: return "waze://"
         case .yandex: return "yandexnavi://"
         case .moovit: return "moovit://"
+        case .uber: return "uber://"
         }
     }
 
@@ -45,6 +47,7 @@ public enum MapsApp {
         case .waze: return "Waze"
         case .yandex: return "Yandex.Navi"
         case .moovit: return "Moovit"
+        case .uber: return "Uber"
         }
     }
 
@@ -107,6 +110,18 @@ public enum MapsApp {
             parameters.maybeSet(key: "origin_lon", value: from?.coordinate.longitude)
             parameters.maybeSet(key: "orig_name", value: from?.name)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
+        case .uber:
+            parameters["action"] = "setPickup"
+            if let from = from {
+                parameters["pickup[latitude]"] = "\(from.coordinate.latitude)"
+                parameters["pickup[longitude]"] = "\(from.coordinate.longitude)"
+            } else {
+                parameters["pickup"] = "my_location"
+            }
+            parameters["dropoff[latitude]"] = "\(to.coordinate.latitude)"
+            parameters["dropoff[longitude]"] = "\(to.coordinate.longitude)"
+            parameters.maybeSet(key: "dropoff[nickname]", value: to.name)
+            return "\(self.urlScheme)?\(parameters.urlParameters)"
         }
     }
 }
