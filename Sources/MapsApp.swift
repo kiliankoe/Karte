@@ -130,7 +130,7 @@ public enum MapsApp {
             parameters["destination[longitude]"] = "\(to.coordinate.longitude)"
             parameters.maybeSet(key: "pickup[latitude]", value: from?.coordinate.latitude)
             parameters.maybeSet(key: "pickup[longitude]", value: from?.coordinate.longitude)
-            return "\(self.urlScheme)?id=lyft&\(parameters.urlParameters)"
+            return "\(self.urlScheme)ridetype?id=lyft&\(parameters.urlParameters)"
         }
     }
 }
