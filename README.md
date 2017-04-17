@@ -63,11 +63,11 @@ The section to add to your `Info.plist` should look like this:
 
 Karte is available through Carthage/Punic and Cocoapods, take your pick.
 
-```swift
-// Carthage
+```ruby
+# Carthage
 github "kiliankoe/Karte"
 
-// Cocoapods
+# Cocoapods
 pod 'Karte'
 ```
 
