@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		396DF69A1EA4E4EC00D3F322 /* LocationRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396DF6991EA4E4EC00D3F322 /* LocationRepresentable.swift */; };
 		39D5B7121EA012D600691937 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7111EA012D600691937 /* Location.swift */; };
 		39D5B7141EA01DB400691937 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7131EA01DB400691937 /* Extensions.swift */; };
 		39D5B7161EA02A5200691937 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7151EA02A5200691937 /* Mode.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		396DF6991EA4E4EC00D3F322 /* LocationRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationRepresentable.swift; path = Sources/LocationRepresentable.swift; sourceTree = "<group>"; };
 		39D5B7111EA012D600691937 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Sources/Location.swift; sourceTree = "<group>"; };
 		39D5B7131EA01DB400691937 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Sources/Extensions.swift; sourceTree = "<group>"; };
 		39D5B7151EA02A5200691937 /* Mode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mode.swift; path = Sources/Mode.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				39D5B7171EA02A7000691937 /* MapsApp.swift */,
 				39D5B7151EA02A5200691937 /* Mode.swift */,
 				39D5B7111EA012D600691937 /* Location.swift */,
+				396DF6991EA4E4EC00D3F322 /* LocationRepresentable.swift */,
 				39D5B7131EA01DB400691937 /* Extensions.swift */,
 				52D6D9971BEFF375002C0205 /* KarteTests.swift */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
@@ -240,6 +243,7 @@
 				39D5B7121EA012D600691937 /* Location.swift in Sources */,
 				39D5B7141EA01DB400691937 /* Extensions.swift in Sources */,
 				39D5B7161EA02A5200691937 /* Mode.swift in Sources */,
+				396DF69A1EA4E4EC00D3F322 /* LocationRepresentable.swift in Sources */,
 				39D5B71A1EA02A8000691937 /* Error.swift in Sources */,
 				52D6D9981BEFF375002C0205 /* Karte.swift in Sources */,
 			);

@@ -55,7 +55,7 @@ public enum MapsApp {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func queryString(origin: Location?, destination: Location, mode: Mode?) throws -> String {
+    func queryString(origin: LocationRepresentable?, destination: LocationRepresentable, mode: Mode?) throws -> String {
         var parameters = [String: String]()
 
         switch self {
@@ -64,17 +64,17 @@ public enum MapsApp {
             _ = try mode?.appleMaps()
             return ""
         case .googleMaps:
-            var fromStr = origin?.coordString
+            var originStr = origin?.coordString
             if let name = origin?.name {
-                fromStr?.append("+(\(name))")
+                originStr?.append("+(\(name))")
             }
-            parameters.set("saddr", fromStr)
+            parameters.set("saddr", originStr)
 
-            var toStr = destination.coordString
+            var destinationStr = destination.coordString
             if let name = destination.name {
-                toStr += "+(\(name))"
+                destinationStr += "+(\(name))"
             }
-            parameters.set("daddr", toStr)
+            parameters.set("daddr", destinationStr)
 
             parameters.set("directionsmode", try mode?.supported(by: self))
 
@@ -95,45 +95,45 @@ public enum MapsApp {
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .lyft:
             _ = try mode?.supported(by: self)
-            parameters.set("pickup[latitude]", origin?.coordinate.latitude)
-            parameters.set("pickup[longitude]", origin?.coordinate.longitude)
-            parameters.set("destination[latitude]", destination.coordinate.latitude)
-            parameters.set("destination[longitude]", destination.coordinate.longitude)
+            parameters.set("pickup[latitude]", origin?.latitude)
+            parameters.set("pickup[longitude]", origin?.longitude)
+            parameters.set("destination[latitude]", destination.latitude)
+            parameters.set("destination[longitude]", destination.longitude)
             return "\(self.urlScheme)ridetype?id=lyft&\(parameters.urlParameters)"
         case .uber:
             _ = try mode?.supported(by: self)
             parameters.set("action", "setPickup")
-            if let from = origin {
-                parameters.set("pickup[latitude]", from.coordinate.latitude)
-                parameters.set("pickup[longitude]", from.coordinate.longitude)
+            if let origin = origin {
+                parameters.set("pickup[latitude]", origin.latitude)
+                parameters.set("pickup[longitude]", origin.longitude)
             } else {
                 parameters.set("pickup", "my_location")
             }
-            parameters.set("dropoff[latitude]", destination.coordinate.latitude)
-            parameters.set("dropoff[longitude]", destination.coordinate.longitude)
+            parameters.set("dropoff[latitude]", destination.latitude)
+            parameters.set("dropoff[longitude]", destination.longitude)
             parameters.set("dropoff[nickname]", destination.name)
             return "\(self.urlScheme)?\(parameters.urlParameters)"
         case .navigon:
             _ = try mode?.supported(by: self)
             let name = destination.name ?? "Destination" // Docs are unclear about the name being omitted
-            return "\(self.urlScheme)coordinate/\(name.urlQuery ?? "")/\(destination.coordinate.longitude)/\(destination.coordinate.latitude)"
+            return "\(self.urlScheme)coordinate/\(name.urlQuery ?? "")/\(destination.longitude)/\(destination.latitude)"
         case .waze:
             _ = try mode?.supported(by: self)
-            return "\(self.urlScheme)?ll=\(destination.coordinate.latitude),\(destination.coordinate.longitude)&navigate=yes"
+            return "\(self.urlScheme)?ll=\(destination.latitude),\(destination.longitude)&navigate=yes"
         case .yandex:
             _ = try mode?.supported(by: self)
-            parameters.set("lat_from", origin?.coordinate.latitude)
-            parameters.set("lon_from", origin?.coordinate.longitude)
-            parameters.set("lat_to", destination.coordinate.latitude)
-            parameters.set("lon_to", destination.coordinate.longitude)
+            parameters.set("lat_from", origin?.latitude)
+            parameters.set("lon_from", origin?.longitude)
+            parameters.set("lat_to", destination.latitude)
+            parameters.set("lon_to", destination.longitude)
             return "\(self.urlScheme)build_route_on_map?\(parameters.urlParameters)"
         case .moovit:
             _ = try mode?.supported(by: self)
-            parameters.set("origin_lat", origin?.coordinate.latitude)
-            parameters.set("origin_lon", origin?.coordinate.longitude)
+            parameters.set("origin_lat", origin?.latitude)
+            parameters.set("origin_lon", origin?.longitude)
             parameters.set("orig_name", origin?.name)
-            parameters.set("dest_lat", destination.coordinate.latitude)
-            parameters.set("dest_lon", destination.coordinate.longitude)
+            parameters.set("dest_lat", destination.latitude)
+            parameters.set("dest_lon", destination.longitude)
             parameters.set("dest_name", destination.name)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         }

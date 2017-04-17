@@ -21,15 +21,4 @@ public struct Location {
         self.address = address
         self.coordinate = coordinate
     }
-
-    public var mapItem: MKMapItem {
-        let placemark = MKPlacemark(coordinate: self.coordinate)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = self.name
-        return mapItem
-    }
-
-    internal var coordString: String {
-        return "\(self.coordinate.latitude),\(self.coordinate.longitude)"
-    }
 }

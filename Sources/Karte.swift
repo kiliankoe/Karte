@@ -17,7 +17,7 @@ public enum Karte {
         return UIApplication.shared.canOpenURL(url)
     }
 
-    public static func launch(app: MapsApp, origin: Location? = nil, destination: Location, mode: Mode? = nil) throws {
+    public static func launch(app: MapsApp, origin: LocationRepresentable? = nil, destination: LocationRepresentable, mode: Mode? = nil) throws {
         guard self.isInstalled(app) else { throw Error.notInstalled }
 
         guard app != .appleMaps else {
@@ -38,7 +38,7 @@ public enum Karte {
         UIApplication.shared.open(url, completionHandler: nil)
     }
 
-    public static func presentPicker(origin: Location? = nil, destination: Location, mode: Mode? = nil, presentOn viewcontroller: UIViewController, title: String? = nil, message: String? = nil, cancel: String = "Cancel", style: UIAlertControllerStyle = .actionSheet) {
+    public static func presentPicker(origin: LocationRepresentable? = nil, destination: LocationRepresentable, mode: Mode? = nil, presentOn viewcontroller: UIViewController, title: String? = nil, message: String? = nil, cancel: String = "Cancel", style: UIAlertControllerStyle = .actionSheet) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         MapsApp.all
             .filter(self.isInstalled)
