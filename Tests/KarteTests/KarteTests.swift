@@ -21,7 +21,7 @@ class KarteTests: XCTestCase {
         for _ in iterateEnum(MapsApp.self) {
             count += 1
         }
-        XCTAssertEqual(MapsApp.all.count, count, "Please ensure that `MapsApp.all` contains all cases")
+        XCTAssertEqual(Set(MapsApp.all).count, count, "Please ensure that `MapsApp.all` contains all cases")
     }
 
     func testQueryStrings() {
