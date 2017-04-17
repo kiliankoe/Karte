@@ -10,7 +10,6 @@ import Foundation
 import MapKit
 
 public enum Mode {
-    // case `default`
     case walking
     case bicycling
     case driving
@@ -18,8 +17,6 @@ public enum Mode {
 
     func appleMaps() throws -> [String: String] {
         switch self {
-        // Omitting `default` for ease of use. Hopefully Maps.app defaults to that when not setting a mode...
-        // case .default: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
         case .walking: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]
         case .driving: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
         case .transit: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeTransit]

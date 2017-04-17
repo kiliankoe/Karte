@@ -8,7 +8,7 @@
 
 import UIKit
 import struct CoreLocation.CLLocationCoordinate2D
-import class MapKit.MKMapItem
+import MapKit
 
 public enum Karte {
     public static func isInstalled(_ app: MapsApp) -> Bool {
@@ -21,7 +21,13 @@ public enum Karte {
         guard self.isInstalled(app) else { throw Error.notInstalled }
 
         guard app != .appleMaps else {
-            MKMapItem.openMaps(with: [from, to].flatMap {$0}.map {$0.mapItem}, launchOptions: try mode?.appleMaps())
+            let modeVal: [String: String]
+            if let mode = mode {
+                modeVal = try mode.appleMaps()
+            } else {
+                modeVal = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
+            }
+            MKMapItem.openMaps(with: [from, to].flatMap {$0}.map {$0.mapItem}, launchOptions: modeVal)
             return
         }
 
