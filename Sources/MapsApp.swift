@@ -16,9 +16,10 @@ public enum MapsApp {
     case navigon // http://www.navigon.com/portal/common/faq/files/NAVIGON_AppInteract.pdf
     case waze
     case yandex
+    case moovit
 
     static var all: [MapsApp] {
-        return [.appleMaps, .googleMaps, .citymapper, .transit, .navigon, .waze, .yandex]
+        return [.appleMaps, .googleMaps, .citymapper, .transit, .navigon, .waze, .yandex, .moovit]
     }
 
     var urlScheme: String {
@@ -30,6 +31,7 @@ public enum MapsApp {
         case .navigon: return "navigon://"
         case .waze: return "waze://"
         case .yandex: return "yandexnavi://"
+        case .moovit: return "moovit://"
         }
     }
 
@@ -42,6 +44,7 @@ public enum MapsApp {
         case .navigon: return "Navigon"
         case .waze: return "Waze"
         case .yandex: return "Yandex.Navi"
+        case .moovit: return "Moovit"
         }
     }
 
@@ -96,6 +99,14 @@ public enum MapsApp {
             parameters.maybeSet(key: "lat_from", value: from?.coordinate.latitude)
             parameters.maybeSet(key: "lon_from", value: from?.coordinate.longitude)
             return "\(self.urlScheme)build_route_on_map?\(parameters.urlParameters)"
+        case .moovit:
+            parameters["dest_lat"] = "\(to.coordinate.latitude)"
+            parameters["dest_lon"] = "\(to.coordinate.longitude)"
+            parameters.maybeSet(key: "dest_name", value: to.name)
+            parameters.maybeSet(key: "origin_lat", value: from?.coordinate.latitude)
+            parameters.maybeSet(key: "origin_lon", value: from?.coordinate.longitude)
+            parameters.maybeSet(key: "orig_name", value: from?.name)
+            return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         }
     }
 }
