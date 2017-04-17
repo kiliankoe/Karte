@@ -55,7 +55,7 @@ public enum MapsApp {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func queryString(from: Location?, to: Location, mode: Mode?) throws -> String {
+    func queryString(origin: Location?, destination: Location, mode: Mode?) throws -> String {
         var parameters = [String: String]()
 
         switch self {
@@ -64,14 +64,14 @@ public enum MapsApp {
             _ = try mode?.appleMaps()
             return ""
         case .googleMaps:
-            var fromStr = from?.coordString
-            if let name = from?.name {
+            var fromStr = origin?.coordString
+            if let name = origin?.name {
                 fromStr?.append("+(\(name))")
             }
             parameters.set("saddr", fromStr)
 
-            var toStr = to.coordString
-            if let name = to.name {
+            var toStr = destination.coordString
+            if let name = destination.name {
                 toStr += "+(\(name))"
             }
             parameters.set("daddr", toStr)
@@ -81,55 +81,55 @@ public enum MapsApp {
             return "\(self.urlScheme)maps?\(parameters.urlParameters)"
         case .citymapper:
             _ = try mode?.anyOnlyTransit()
-            parameters.set("endcoord", to.coordString)
-            parameters.set("startcoord", from?.coordString)
-            parameters.set("startname", from?.name)
-            parameters.set("startaddress", from?.address)
-            parameters.set("endname", to.name)
-            parameters.set("endaddress", to.address)
+            parameters.set("endcoord", destination.coordString)
+            parameters.set("startcoord", origin?.coordString)
+            parameters.set("startname", origin?.name)
+            parameters.set("startaddress", origin?.address)
+            parameters.set("endname", destination.name)
+            parameters.set("endaddress", destination.address)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .transit:
             _ = try mode?.anyOnlyTransit()
-            parameters.set("from", from?.coordString)
-            parameters.set("to", to.coordString)
+            parameters.set("from", origin?.coordString)
+            parameters.set("to", destination.coordString)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .lyft:
-            parameters.set("pickup[latitude]", from?.coordinate.latitude)
-            parameters.set("pickup[longitude]", from?.coordinate.longitude)
-            parameters.set("destination[latitude]", to.coordinate.latitude)
-            parameters.set("destination[longitude]", to.coordinate.longitude)
+            parameters.set("pickup[latitude]", origin?.coordinate.latitude)
+            parameters.set("pickup[longitude]", origin?.coordinate.longitude)
+            parameters.set("destination[latitude]", destination.coordinate.latitude)
+            parameters.set("destination[longitude]", destination.coordinate.longitude)
             return "\(self.urlScheme)ridetype?id=lyft&\(parameters.urlParameters)"
         case .uber:
             parameters.set("action", "setPickup")
-            if let from = from {
+            if let from = origin {
                 parameters.set("pickup[latitude]", from.coordinate.latitude)
                 parameters.set("pickup[longitude]", from.coordinate.longitude)
             } else {
                 parameters.set("pickup", "my_location")
             }
-            parameters.set("dropoff[latitude]", to.coordinate.latitude)
-            parameters.set("dropoff[longitude]", to.coordinate.longitude)
-            parameters.set("dropoff[nickname]", to.name)
+            parameters.set("dropoff[latitude]", destination.coordinate.latitude)
+            parameters.set("dropoff[longitude]", destination.coordinate.longitude)
+            parameters.set("dropoff[nickname]", destination.name)
             return "\(self.urlScheme)?\(parameters.urlParameters)"
         case .navigon:
-            let name = to.name ?? "Destination" // Docs are unclear about the name being omitted
-            return "\(self.urlScheme)coordinate/\(name.urlQuery ?? "")/\(to.coordinate.longitude)/\(to.coordinate.latitude)"
+            let name = destination.name ?? "Destination" // Docs are unclear about the name being omitted
+            return "\(self.urlScheme)coordinate/\(name.urlQuery ?? "")/\(destination.coordinate.longitude)/\(destination.coordinate.latitude)"
         case .waze:
             _ = try mode?.anyOnlyDriving()
-            return "\(self.urlScheme)?ll=\(to.coordinate.latitude),\(to.coordinate.longitude)&navigate=yes"
+            return "\(self.urlScheme)?ll=\(destination.coordinate.latitude),\(destination.coordinate.longitude)&navigate=yes"
         case .yandex:
-            parameters.set("lat_from", from?.coordinate.latitude)
-            parameters.set("lon_from", from?.coordinate.longitude)
-            parameters.set("lat_to", to.coordinate.latitude)
-            parameters.set("lon_to", to.coordinate.longitude)
+            parameters.set("lat_from", origin?.coordinate.latitude)
+            parameters.set("lon_from", origin?.coordinate.longitude)
+            parameters.set("lat_to", destination.coordinate.latitude)
+            parameters.set("lon_to", destination.coordinate.longitude)
             return "\(self.urlScheme)build_route_on_map?\(parameters.urlParameters)"
         case .moovit:
-            parameters.set("origin_lat", from?.coordinate.latitude)
-            parameters.set("origin_lon", from?.coordinate.longitude)
-            parameters.set("orig_name", from?.name)
-            parameters.set("dest_lat", to.coordinate.latitude)
-            parameters.set("dest_lon", to.coordinate.longitude)
-            parameters.set("dest_name", to.name)
+            parameters.set("origin_lat", origin?.coordinate.latitude)
+            parameters.set("origin_lon", origin?.coordinate.longitude)
+            parameters.set("orig_name", origin?.name)
+            parameters.set("dest_lat", destination.coordinate.latitude)
+            parameters.set("dest_lon", destination.coordinate.longitude)
+            parameters.set("dest_name", destination.name)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         }
     }

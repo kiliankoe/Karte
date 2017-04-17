@@ -17,7 +17,7 @@ public enum Karte {
         return UIApplication.shared.canOpenURL(url)
     }
 
-    public static func launch(app: MapsApp, from: Location? = nil, to: Location, mode: Mode? = nil) throws {
+    public static func launch(app: MapsApp, origin: Location? = nil, destination: Location, mode: Mode? = nil) throws {
         guard self.isInstalled(app) else { throw Error.notInstalled }
 
         guard app != .appleMaps else {
@@ -27,18 +27,18 @@ public enum Karte {
             } else {
                 modeVal = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
             }
-            MKMapItem.openMaps(with: [from, to].flatMap {$0}.map {$0.mapItem}, launchOptions: modeVal)
+            MKMapItem.openMaps(with: [origin, destination].flatMap {$0}.map {$0.mapItem}, launchOptions: modeVal)
             return
         }
 
-        guard let url = URL(string: try app.queryString(from: from, to: to, mode: mode)) else {
+        guard let url = URL(string: try app.queryString(origin: origin, destination: destination, mode: mode)) else {
             throw Error.malformedURL // There's not really a lot the user could do about this, is there?
         }
 
         UIApplication.shared.open(url, completionHandler: nil)
     }
 
-    public static func presentPicker(from: Location? = nil, to: Location, mode: Mode? = nil, on viewcontroller: UIViewController, title: String? = nil, message: String? = nil, cancel: String = "Cancel", style: UIAlertControllerStyle = .actionSheet) {
+    public static func presentPicker(origin: Location? = nil, destination: Location, mode: Mode? = nil, presentOn viewcontroller: UIViewController, title: String? = nil, message: String? = nil, cancel: String = "Cancel", style: UIAlertControllerStyle = .actionSheet) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         MapsApp.all
             .filter(self.isInstalled)
@@ -47,7 +47,7 @@ public enum Karte {
                 // invoked again below in the action handler of the UIAlertAction, where it could theoretically silently throw again and result in nothing happening.
                 // But since the action handler isn't invoked here it's kinda not possible to check if it works at this point :/
                 do {
-                    _ = try app.queryString(from: from, to: to, mode: mode)
+                    _ = try app.queryString(origin: origin, destination: destination, mode: mode)
                 } catch {
                     return false
                 }
@@ -55,7 +55,7 @@ public enum Karte {
             }
             .map { app in
                 return UIAlertAction(title: app.name, style: .default, handler: { _ in
-                    try? self.launch(app: app, from: from, to: to, mode: mode)
+                    try? self.launch(app: app, origin: origin, destination: destination, mode: mode)
                 })
             }
             .forEach { action in

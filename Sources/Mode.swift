@@ -34,6 +34,8 @@ public enum Mode {
         }
     }
 
+    // MARK: -
+
     func anyOnlyTransit() throws {
         if self != .transit {
             throw Error.unsupportedMode
