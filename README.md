@@ -4,6 +4,8 @@ Small library for opening a location or route in other popular iOS map apps.
 
 Currently supported are Apple Maps, Google Maps, Citymapper, Transit, Lyft, Uber, Navigon, Waze, Yandex.Navi and Moovit.
 
+
+
 ## Quick Start
 
 Check if an app is installed.
@@ -71,15 +73,15 @@ pod 'Karte'
 
 
 
-## Authors
-
-Kilian Koeltzsch, [@kiliankoe](https://github.com/kiliankoe)
-
-
-
 ## Credits
 
 This library is based on [CMMapLauncher](https://github.com/citymapper/CMMapLauncher). Unfortunately development on that library seems to have been stopped, so this is a reimplementation in Swift including a few changes and other apps to make usage even more pleasant 😊
+
+
+
+## Authors
+
+Kilian Koeltzsch, [@kiliankoe](https://github.com/kiliankoe)
 
 
 
