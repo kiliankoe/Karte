@@ -19,14 +19,14 @@ public protocol LocationRepresentable {
 }
 
 extension LocationRepresentable {
-    var mapItem: MKMapItem {
+    internal var mapItem: MKMapItem {
         let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude))
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = self.name
         return mapItem
     }
 
-    var coordString: String {
+    internal var coordString: String {
         return "\(self.latitude),\(self.longitude)"
     }
 }
