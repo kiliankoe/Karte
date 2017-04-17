@@ -18,9 +18,10 @@ public enum MapsApp {
     case yandex
     case moovit
     case uber
+    case lyft
 
     static var all: [MapsApp] {
-        return [.appleMaps, .googleMaps, .citymapper, .transit, .navigon, .waze, .yandex, .moovit, .uber]
+        return [.appleMaps, .googleMaps, .citymapper, .transit, .navigon, .waze, .yandex, .moovit, .uber, .lyft]
     }
 
     var urlScheme: String {
@@ -34,6 +35,7 @@ public enum MapsApp {
         case .yandex: return "yandexnavi://"
         case .moovit: return "moovit://"
         case .uber: return "uber://"
+        case .lyft: return "lyft://"
         }
     }
 
@@ -48,6 +50,7 @@ public enum MapsApp {
         case .yandex: return "Yandex.Navi"
         case .moovit: return "Moovit"
         case .uber: return "Uber"
+        case .lyft: return "Lyft"
         }
     }
 
@@ -122,6 +125,12 @@ public enum MapsApp {
             parameters["dropoff[longitude]"] = "\(to.coordinate.longitude)"
             parameters.maybeSet(key: "dropoff[nickname]", value: to.name)
             return "\(self.urlScheme)?\(parameters.urlParameters)"
+        case .lyft:
+            parameters["destination[latitude]"] = "\(to.coordinate.latitude)"
+            parameters["destination[longitude]"] = "\(to.coordinate.longitude)"
+            parameters.maybeSet(key: "pickup[latitude]", value: from?.coordinate.latitude)
+            parameters.maybeSet(key: "pickup[longitude]", value: from?.coordinate.longitude)
+            return "\(self.urlScheme)?id=lyft&\(parameters.urlParameters)"
         }
     }
 }
