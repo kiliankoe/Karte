@@ -70,18 +70,4 @@ public enum Mode {
 
         return "" // wat? how is this necessary?
     }
-
-    // MARK: -
-
-    func anyOnlyTransit() throws {
-        if self != .transit {
-            throw Error.unsupportedMode
-        }
-    }
-
-    func anyOnlyDriving() throws {
-        if self != .driving {
-            throw Error.unsupportedMode
-        }
-    }
 }
