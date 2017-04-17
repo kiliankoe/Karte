@@ -65,7 +65,7 @@ Karte is available through Carthage/Punic and Cocoapods, take your pick.
 
 ```swift
 // Carthage
-github "kiliankoe/dvb"
+github "kiliankoe/Karte"
 
 // Cocoapods
 pod 'Karte'
