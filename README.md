@@ -25,7 +25,7 @@ try? Karte.launch(app: .googleMaps, destination: berlin)
 Or directly present the user with an action sheet listing all installed navigation apps to pick from.
 
 ```swift
-Karte.presentPicker(destination: location, on: viewController)
+Karte.presentPicker(destination: location, presentOn: viewController)
 ```
 
 
