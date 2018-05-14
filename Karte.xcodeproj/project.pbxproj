@@ -29,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		39002DAB20A990F7004D277C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		396DF6991EA4E4EC00D3F322 /* LocationRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationRepresentable.swift; path = Sources/LocationRepresentable.swift; sourceTree = "<group>"; };
 		39D5B7111EA012D600691937 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Sources/Location.swift; sourceTree = "<group>"; };
 		39D5B7131EA01DB400691937 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Sources/Extensions.swift; sourceTree = "<group>"; };
@@ -65,6 +66,7 @@
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
+				39002DAB20A990F7004D277C /* README.md */,
 				52D6D9961BEFF375002C0205 /* Karte.swift */,
 				39D5B7191EA02A8000691937 /* Error.swift */,
 				39D5B7171EA02A7000691937 /* MapsApp.swift */,
