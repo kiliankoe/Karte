@@ -54,7 +54,8 @@ public enum MapsApp {
         }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable function_body_length
     func queryString(origin: LocationRepresentable?, destination: LocationRepresentable, mode: Mode?) throws -> String {
         var parameters = [String: String]()
 
@@ -138,4 +139,6 @@ public enum MapsApp {
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         }
     }
+    // swiftlint:enable function_body_length
+    // swiftlint:enable cyclomatic_complexity
 }

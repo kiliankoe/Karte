@@ -31,7 +31,7 @@ public enum Mode {
     /// - Parameter app: navigation app
     /// - Returns: empty string if parameter is irrelevant, but supported
     /// - Throws: `unsupportedMode` if app doesn't support this mode
-    func supported(by app: MapsApp) throws -> String {
+    func supported(by app: MapsApp) throws -> String { // swiftlint:disable:this cyclomatic_complexity
         switch app {
         case .appleMaps:
             return "" // yay for special ❄️'s
