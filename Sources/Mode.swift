@@ -68,6 +68,6 @@ public enum Mode {
             return ""
         }
 
-        return "" // wat? how is this necessary?
+        return ""
     }
 }
