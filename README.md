@@ -1,5 +1,7 @@
-![jumbotron](https://user-images.githubusercontent.com/2625584/27936413-ed9d1540-62b0-11e7-98b5-6da10ac2ba82.png)
-# Karte
+<h1>Karte
+  <img src="https://user-images.githubusercontent.com/2625584/39985249-4a74987c-575e-11e8-9c4a-8c0dbd07e8ef.png"
+       align="right" width="128" height="128" />
+</h1>
 
 [![Travis](https://img.shields.io/travis/kiliankoe/Karte.svg?style=flat-square)](https://travis-ci.org/kiliankoe/Karte)
 [![Version](https://img.shields.io/cocoapods/v/Karte.svg?style=flat-square)](http://cocoapods.org/pods/Karte)
