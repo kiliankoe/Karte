@@ -28,7 +28,7 @@ public enum Karte {
                 // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to the route, but show search boxes with prefilled content instead.
                 modeVal = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
             }
-            MKMapItem.openMaps(with: [origin, destination].flatMap {$0?.mapItem}, launchOptions: modeVal)
+            MKMapItem.openMaps(with: [origin, destination].compactMap { $0?.mapItem }, launchOptions: modeVal)
             return
         }
 
