@@ -1,6 +1,7 @@
 disabled_rules:
   - trailing_comma
   - line_length
+  - identifier_name
 
 identifier_name:
   excluded:

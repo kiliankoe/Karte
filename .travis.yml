@@ -1,11 +1,11 @@
-osx_image: xcode8.3
+osx_image: xcode9.3
 language: objective-c
 
 before_install:
   - gem install xcpretty
 
 script:
-  - xcodebuild test -scheme Karte -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3' | xcpretty
+  - xcodebuild test -scheme Karte -destination 'platform=iOS Simulator,name=iPhone X,OS=11.3' | xcpretty
   - pod lib lint
 
 after_success:
