@@ -31,7 +31,10 @@ public enum Karte {
     ///   - destination: the location to route to
     ///   - mode: an optional mode of transport to use
     /// - Throws: `Karte.Error.unsupportedMode` if the chosen mode is not supported by the target app
-    public static func launch(app: MapsApp, origin: LocationRepresentable? = nil, destination: LocationRepresentable, mode: Mode? = nil) throws {
+    public static func launch(app: MapsApp,
+                              origin: LocationRepresentable? = nil,
+                              destination: LocationRepresentable,
+                              mode: Mode? = nil) throws {
         guard self.isInstalled(app) else { throw Error.notInstalled }
 
         guard app != .appleMaps else {
@@ -55,19 +58,27 @@ public enum Karte {
         UIApplication.shared.open(url, completionHandler: nil)
     }
 
-    /// Present a `UIAlertController` with all supported apps the device has installed to offer an option for which app to start.
+    /// Return a `UIAlertController` with all supported apps the device has installed to offer an option for which app to start.
+    /// Use this instead of `Karte.presentPicker()` if you want to control the presentation of the alert view controller manually.
     ///
     /// - Parameters:
     ///   - origin: an optional origin location, defaults to the user's location if left empty in most apps
     ///   - destination: the location to route to
     ///   - mode: an optional mode of transport to use, results in only those apps being shown that support this mode
-    ///   - viewcontroller: a `UIViewController` to present the `UIAlertController` on
     ///   - title: an optional title for the `UIAlertController`
     ///   - message: an optional message for the `UIAlertController`
     ///   - cancel: label for the cancel button, defaults to "Cancel"
     ///   - style: the `UIAlertController`'s style, defaults to `.actionSheet`
-    public static func presentPicker(origin: LocationRepresentable? = nil, destination: LocationRepresentable, mode: Mode? = nil, presentOn viewcontroller: UIViewController, title: String? = nil, message: String? = nil, cancel: String = "Cancel", style: UIAlertControllerStyle = .actionSheet) {
+    /// - Returns: the alert view controller
+    public static func createPicker(origin: LocationRepresentable? = nil,
+                                    destination: LocationRepresentable,
+                                    mode: Mode? = nil,
+                                    title: String? = nil,
+                                    message: String? = nil,
+                                    cancel: String = "Cancel",
+                                    style: UIAlertControllerStyle = .actionSheet) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
+
         MapsApp.all
             .filter(self.isInstalled)
             .filter { app in
@@ -88,8 +99,35 @@ public enum Karte {
             }
             .forEach { action in
                 alert.addAction(action)
-            }
+        }
+
         alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
+
+        return alert
+    }
+
+    /// Present a `UIAlertController` with all supported apps the device has installed to offer an option for which app to start.
+    ///
+    /// - Parameters:
+    ///   - origin: an optional origin location, defaults to the user's location if left empty in most apps
+    ///   - destination: the location to route to
+    ///   - mode: an optional mode of transport to use, results in only those apps being shown that support this mode
+    ///   - viewcontroller: a `UIViewController` to present the `UIAlertController` on
+    ///   - title: an optional title for the `UIAlertController`
+    ///   - message: an optional message for the `UIAlertController`
+    ///   - cancel: label for the cancel button, defaults to "Cancel"
+    ///   - style: the `UIAlertController`'s style, defaults to `.actionSheet`
+    public static func presentPicker(origin: LocationRepresentable? = nil,
+                                     destination: LocationRepresentable,
+                                     mode: Mode? = nil,
+                                     presentOn viewcontroller: UIViewController,
+                                     title: String? = nil,
+                                     message: String? = nil,
+                                     cancel: String = "Cancel",
+                                     style: UIAlertControllerStyle = .actionSheet) {
+
+        let alert = createPicker(origin: origin, destination: destination, mode: mode, title: title, message: message, cancel: cancel, style: style)
+
         OperationQueue.main.addOperation {
             viewcontroller.present(alert, animated: true, completion: nil)
         }
