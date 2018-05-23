@@ -82,6 +82,7 @@ public enum App {
 
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
+    /// Build a query string for this app using the parameters. Returns nil if a mode is specified, but not supported by this app.
     func queryString(origin: LocationRepresentable?, destination: LocationRepresentable, mode: Mode?) -> String? {
         guard self.supports(mode: mode) else {
             // if a mode is present, validate if the app supports it, otherwise we don't care
