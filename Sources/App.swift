@@ -99,7 +99,7 @@ public enum App {
             parameters.set("daddr", destination.coordString)
 
             let modeIdentifier = mode?.identifier(for: self) as? String
-            parameters.set("directionsmode", modeIdentifier) // TODO: Check what GMaps does with no mode set
+            parameters.set("directionsmode", modeIdentifier)
             return "\(self.urlScheme)maps?\(parameters.urlParameters)"
         case .citymapper:
             parameters.set("endcoord", destination.coordString)
