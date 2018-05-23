@@ -52,7 +52,7 @@ let alert = Karte.createPicker(destination: location)
 
 ## Caveat
 
-Please be aware that for `.isInstalled()`, `.presentPicker()` and `.createPicker()` to work you will have to have added the necessary URL schemes to your app's `Info.plist` beforehand. See [Apple's Docs](https://developer.apple.com/reference/uikit/uiapplication/1622952-canopenurl#discussion) for more info on this. The necessary URL schemes can be found [here](https://github.com/kiliankoe/Karte/blob/master/Sources/MapsApp.swift#L24). You're still free to try and launch apps via `Karte.launch(app:to:)` regardless of registered URL schemes, although that obviously might result in nothing happening if the app isn't there. Don't forget that even Apple Maps can be "uninstalled" now 😉
+Please be aware that for `.isInstalled()`, `.presentPicker()` and `.createPicker()` to work you will have to have added the necessary URL schemes to your app's `Info.plist` beforehand. See [Apple's Docs](https://developer.apple.com/reference/uikit/uiapplication/1622952-canopenurl#discussion) for more info on this. The necessary URL schemes can be found [here](https://github.com/kiliankoe/Karte/blob/master/Sources/App.swift#L24). You're still free to try and launch apps via `Karte.launch(app:to:)` regardless of registered URL schemes, although that obviously might result in nothing happening if the app isn't there. Don't forget that even Apple Maps can be "uninstalled" now 😉
 
 The section to add to your `Info.plist` should look like this:
 

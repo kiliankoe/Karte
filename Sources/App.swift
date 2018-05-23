@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum MapsApp {
+public enum App {
     case appleMaps
     case googleMaps // https://developers.google.com/maps/documentation/ios/urlscheme
     case citymapper
@@ -20,7 +20,7 @@ public enum MapsApp {
     case yandex
     case moovit
 
-    static var all: [MapsApp] {
+    static var all: [App] {
         return [.appleMaps, .googleMaps, .citymapper, .transit, .lyft, .uber, .navigon, .waze, .yandex, .moovit]
     }
 

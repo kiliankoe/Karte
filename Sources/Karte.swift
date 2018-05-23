@@ -17,7 +17,7 @@ public enum Karte {
     /// - Returns: `true` if the app is installed
     /// - Warning: For this to return `true` in any case, the necessary url schemes have to be included in your app's Info.plist.
     /// Please see Karte's README for additional details.
-    public static func isInstalled(_ app: MapsApp) -> Bool {
+    public static func isInstalled(_ app: App) -> Bool {
         guard app != .appleMaps else { return true }
         guard let url = URL(string: app.urlScheme) else { return false }
         return UIApplication.shared.canOpenURL(url)
@@ -31,7 +31,7 @@ public enum Karte {
     ///   - destination: the location to route to
     ///   - mode: an optional mode of transport to use
     /// - Throws: `Karte.Error.unsupportedMode` if the chosen mode is not supported by the target app
-    public static func launch(app: MapsApp,
+    public static func launch(app: App,
                               origin: LocationRepresentable? = nil,
                               destination: LocationRepresentable,
                               mode: Mode? = nil) throws {
@@ -76,7 +76,7 @@ public enum Karte {
                                     style: UIAlertControllerStyle = .actionSheet) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
 
-        MapsApp.all
+        App.all
             .filter(self.isInstalled)
             .filter { $0.supports(mode: mode) } // defaults to true if mode is nil
             .map { app in
