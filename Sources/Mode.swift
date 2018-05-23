@@ -52,25 +52,4 @@ public enum Mode {
             return nil
         }
     }
-
-    func supported(by app: MapsApp) -> Bool {
-        switch app {
-        case .appleMaps:
-            return self != .bicycling
-        case .googleMaps:
-            return true
-        case .citymapper, .transit:
-            return self == .transit
-        case .lyft, .uber:
-            return self == .taxi
-        case .navigon:
-            return self == .driving || self == .walking
-        case .waze:
-            return self == .driving
-        case .yandex:
-            return true
-        case .moovit:
-            return true
-        }
-    }
 }

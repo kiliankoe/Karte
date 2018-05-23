@@ -54,6 +54,33 @@ public enum MapsApp {
         }
     }
 
+    // TODO: Test this
+    /// Validates if an app supports a mode. The given mode is optional and this defaults to `true` if the mode is `nil`.
+    func supports(mode: Mode?) -> Bool {
+        guard let mode = mode else {
+            return true
+        }
+
+        switch self {
+        case .appleMaps:
+            return mode != .bicycling
+        case .googleMaps:
+            return true
+        case .citymapper, .transit:
+            return mode != .transit
+        case .lyft, .uber:
+            return mode == .taxi
+        case .navigon:
+            return mode == .driving || mode == .walking
+        case .waze:
+            return mode == .driving
+        case .yandex:
+            return true
+        case .moovit:
+            return true
+        }
+    }
+
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
     func queryString(origin: LocationRepresentable?, destination: LocationRepresentable, mode: Mode?) throws -> String {
