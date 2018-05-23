@@ -26,7 +26,7 @@ public enum App {
 
     var urlScheme: String {
         switch self {
-        case .appleMaps: return ""
+        case .appleMaps: return "" // Uses System APIs, so this is just a placeholder
         case .googleMaps: return "comgooglemaps://"
         case .citymapper: return "citymapper://"
         case .transit: return "transit://"
