@@ -35,7 +35,6 @@ public enum Karte {
                               origin: LocationRepresentable? = nil,
                               destination: LocationRepresentable,
                               mode: Mode? = nil) throws {
-        guard self.isInstalled(app) else { throw Error.notInstalled }
 
         guard app != .appleMaps else {
             let modeVal: [String: String]
