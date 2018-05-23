@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+import MapKit
 @testable import Karte
 
 import struct CoreLocation.CLLocationCoordinate2D
@@ -36,6 +37,15 @@ class KarteTests: XCTestCase {
         XCTAssertEqual(App.waze.queryString(origin: anonLoc, destination: namedLoc, mode: nil), "waze://?ll=10.0,10.0&navigate=yes")
         XCTAssertEqual(App.yandex.queryString(origin: anonLoc, destination: namedLoc, mode: nil), "yandexnavi://build_route_on_map?lat_from=10.0&lat_to=10.0&lon_from=10.0&lon_to=10.0")
         XCTAssertEqual(App.moovit.queryString(origin: anonLoc, destination: namedLoc, mode: nil), "moovit://directions?dest_lat=10.0&dest_lon=10.0&dest_name=Named%20Location&origin_lat=10.0&origin_lon=10.0")
+    }
+
+    func testModeIdentifier() {
+        XCTAssertEqual(Mode.walking.identifier(for: .appleMaps) as? [String: String], [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking])
+        XCTAssertNil(Mode.bicycling.identifier(for: .appleMaps))
+
+        XCTAssertEqual(Mode.driving.identifier(for: .googleMaps) as? String, "driving")
+
+        XCTAssertNil(Mode.transit.identifier(for: .transit))
     }
 
     func testIsInstalled() {
