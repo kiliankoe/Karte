@@ -55,6 +55,15 @@ public enum Karte {
         UIApplication.shared.open(url, completionHandler: nil)
     }
 
+    /// Launch a navigation app showing a certain location.
+    ///
+    /// - Parameters:
+    ///   - app: the app to be launched
+    ///   - location: the location to show
+    public static func launch(app: App, location: LocationRepresentable) {
+        // TODO
+    }
+
     /// Return a `UIAlertController` with all supported apps the device has installed to offer an option for which app to start.
     /// Use this instead of `Karte.presentPicker()` if you want to control the presentation of the alert view controller manually.
     ///
