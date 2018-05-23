@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum MapsApp {
+public enum App {
     case appleMaps
     case googleMaps // https://developers.google.com/maps/documentation/ios/urlscheme
     case citymapper
@@ -20,13 +20,13 @@ public enum MapsApp {
     case yandex
     case moovit
 
-    static var all: [MapsApp] {
+    static var all: [App] {
         return [.appleMaps, .googleMaps, .citymapper, .transit, .lyft, .uber, .navigon, .waze, .yandex, .moovit]
     }
 
     var urlScheme: String {
         switch self {
-        case .appleMaps: return ""
+        case .appleMaps: return "" // Uses System APIs, so this is just a placeholder
         case .googleMaps: return "comgooglemaps://"
         case .citymapper: return "citymapper://"
         case .transit: return "transit://"
@@ -54,23 +54,55 @@ public enum MapsApp {
         }
     }
 
+    /// Validates if an app supports a mode. The given mode is optional and this defaults to `true` if the mode is `nil`.
+    func supports(mode: Mode?) -> Bool {
+        guard let mode = mode else {
+            return true
+        }
+
+        switch self {
+        case .appleMaps:
+            return mode != .bicycling
+        case .googleMaps:
+            return true
+        case .citymapper, .transit:
+            return mode == .transit
+        case .lyft, .uber:
+            return mode == .taxi
+        case .navigon:
+            return mode == .driving || mode == .walking
+        case .waze:
+            return mode == .driving
+        case .yandex:
+            return true
+        case .moovit:
+            return true
+        }
+    }
+
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
-    func queryString(origin: LocationRepresentable?, destination: LocationRepresentable, mode: Mode?) throws -> String {
+    /// Build a query string for this app using the parameters. Returns nil if a mode is specified, but not supported by this app.
+    func queryString(origin: LocationRepresentable?, destination: LocationRepresentable, mode: Mode?) -> String? {
+        guard self.supports(mode: mode) else {
+            // if a mode is present, validate if the app supports it, otherwise we don't care
+            return nil
+        }
+
         var parameters = [String: String]()
 
         switch self {
         case .appleMaps:
-            // This just needs to validate that the mode is supported by Apple Maps.
-            _ = try mode?.appleMaps()
-            return ""
+            // Apple Maps gets special handling, since it uses System APIs
+            return nil
         case .googleMaps:
             parameters.set("saddr", origin?.coordString)
             parameters.set("daddr", destination.coordString)
-            parameters.set("directionsmode", try mode?.supported(by: self))
+
+            let modeIdentifier = mode?.identifier(for: self) as? String
+            parameters.set("directionsmode", modeIdentifier)
             return "\(self.urlScheme)maps?\(parameters.urlParameters)"
         case .citymapper:
-            _ = try mode?.supported(by: self)
             parameters.set("endcoord", destination.coordString)
             parameters.set("startcoord", origin?.coordString)
             parameters.set("startname", origin?.name)
@@ -79,19 +111,16 @@ public enum MapsApp {
             parameters.set("endaddress", destination.address)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .transit:
-            _ = try mode?.supported(by: self)
             parameters.set("from", origin?.coordString)
             parameters.set("to", destination.coordString)
             return "\(self.urlScheme)directions?\(parameters.urlParameters)"
         case .lyft:
-            _ = try mode?.supported(by: self)
             parameters.set("pickup[latitude]", origin?.latitude)
             parameters.set("pickup[longitude]", origin?.longitude)
             parameters.set("destination[latitude]", destination.latitude)
             parameters.set("destination[longitude]", destination.longitude)
             return "\(self.urlScheme)ridetype?id=lyft&\(parameters.urlParameters)"
         case .uber:
-            _ = try mode?.supported(by: self)
             parameters.set("action", "setPickup")
             if let origin = origin {
                 parameters.set("pickup[latitude]", origin.latitude)
@@ -104,21 +133,17 @@ public enum MapsApp {
             parameters.set("dropoff[nickname]", destination.name)
             return "\(self.urlScheme)?\(parameters.urlParameters)"
         case .navigon:
-            _ = try mode?.supported(by: self)
             let name = destination.name ?? "Destination" // Docs are unclear about the name being omitted
             return "\(self.urlScheme)coordinate/\(name.urlQuery ?? "")/\(destination.longitude)/\(destination.latitude)"
         case .waze:
-            _ = try mode?.supported(by: self)
             return "\(self.urlScheme)?ll=\(destination.latitude),\(destination.longitude)&navigate=yes"
         case .yandex:
-            _ = try mode?.supported(by: self)
             parameters.set("lat_from", origin?.latitude)
             parameters.set("lon_from", origin?.longitude)
             parameters.set("lat_to", destination.latitude)
             parameters.set("lon_to", destination.longitude)
             return "\(self.urlScheme)build_route_on_map?\(parameters.urlParameters)"
         case .moovit:
-            _ = try mode?.supported(by: self)
             parameters.set("origin_lat", origin?.latitude)
             parameters.set("origin_lon", origin?.longitude)
             parameters.set("orig_name", origin?.name)

@@ -17,7 +17,7 @@ public enum Karte {
     /// - Returns: `true` if the app is installed
     /// - Warning: For this to return `true` in any case, the necessary url schemes have to be included in your app's Info.plist.
     /// Please see Karte's README for additional details.
-    public static func isInstalled(_ app: MapsApp) -> Bool {
+    public static func isInstalled(_ app: App) -> Bool {
         guard app != .appleMaps else { return true }
         guard let url = URL(string: app.urlScheme) else { return false }
         return UIApplication.shared.canOpenURL(url)
@@ -31,24 +31,23 @@ public enum Karte {
     ///   - destination: the location to route to
     ///   - mode: an optional mode of transport to use
     /// - Throws: `Karte.Error.unsupportedMode` if the chosen mode is not supported by the target app
-    public static func launch(app: MapsApp,
+    public static func launch(app: App,
                               origin: LocationRepresentable? = nil,
                               destination: LocationRepresentable,
                               mode: Mode? = nil) throws {
 
         guard app != .appleMaps else {
-            let modeVal: [String: String]
-            if let mode = mode {
-                modeVal = try mode.appleMaps()
-            } else {
-                // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to the route, but show search boxes with prefilled content instead.
-                modeVal = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
-            }
-            MKMapItem.openMaps(with: [origin, destination].compactMap { $0?.mapItem }, launchOptions: modeVal)
+            // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to the route, but show search boxes with prefilled content instead.
+            let modeKey = (mode?.identifier(for: .appleMaps) as? [String: String]) ?? [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
+            MKMapItem.openMaps(with: [origin, destination].compactMap { $0?.mapItem }, launchOptions: modeKey)
             return
         }
 
-        guard let url = URL(string: try app.queryString(origin: origin, destination: destination, mode: mode)) else {
+        guard let queryString = app.queryString(origin: origin, destination: destination, mode: mode) else {
+            throw Error.unsupportedMode
+        }
+
+        guard let url = URL(string: queryString) else {
             assertionFailure("Failed to create URL for \(app)")
             return
         }
@@ -77,27 +76,15 @@ public enum Karte {
                                     style: UIAlertControllerStyle = .actionSheet) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
 
-        MapsApp.all
+        App.all
             .filter(self.isInstalled)
-            .filter { app in
-                // Filtering all apps that throw on the chosen mode of transport. The implementation here should work, but isn't quite ideal, since the call is
-                // invoked again below in the action handler of the UIAlertAction, where it could theoretically silently throw again and result in nothing happening.
-                // But since the action handler isn't invoked here it's kinda not possible to check if it works at this point :/
-                do {
-                    _ = try app.queryString(origin: origin, destination: destination, mode: mode)
-                } catch {
-                    return false
-                }
-                return true
-            }
+            .filter { $0.supports(mode: mode) } // defaults to true if mode is nil
             .map { app in
                 return UIAlertAction(title: app.name, style: .default, handler: { _ in
                     try? self.launch(app: app, origin: origin, destination: destination, mode: mode)
                 })
             }
-            .forEach { action in
-                alert.addAction(action)
-        }
+            .forEach { alert.addAction($0) }
 
         alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
 
