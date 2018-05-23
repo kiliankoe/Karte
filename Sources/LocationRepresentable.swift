@@ -14,6 +14,7 @@ import class MapKit.MKPlacemark
 public protocol LocationRepresentable {
     var latitude: Double { get }
     var longitude: Double { get }
+    /// - Note: This property is not supported by all navigation apps.
     var name: String? { get }
     var address: String? { get }
 }
