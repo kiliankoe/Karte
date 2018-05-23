@@ -16,11 +16,11 @@ public enum Mode {
     case transit
     case taxi
 
-    /// Look up the transport mode parameter names for a given app.
+    /// Look up the transport mode identifier name for a given app.
     ///
     /// - Parameter app: navigation app
     /// - Returns: For Apple Maps a `[String:String]`, `String` for anything else. `nil` if irrelevant.
-    func parameter(for app: MapsApp) -> Any? { // swiftlint:disable:this cyclomatic_complexity
+    func identifier(for app: MapsApp) -> Any? { // swiftlint:disable:this cyclomatic_complexity
         switch app {
         case .appleMaps:
             switch self {
