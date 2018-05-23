@@ -48,6 +48,14 @@ class KarteTests: XCTestCase {
         XCTAssertNil(Mode.transit.identifier(for: .transit))
     }
 
+    func testCreatePicker() {
+        let dummyCoordinate = CLLocationCoordinate2D(latitude: 10.0, longitude: 10.0)
+        let anonLoc = Location(coordinate: dummyCoordinate)
+
+        let alert = Karte.createPicker(destination: anonLoc)
+        XCTAssertEqual(alert.actions.count, 2) // Apple Maps and Cancel
+    }
+
     func testIsInstalled() {
         XCTAssertTrue(Karte.isInstalled(.appleMaps))
         XCTAssertFalse(Karte.isInstalled(.googleMaps))
