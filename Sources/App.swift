@@ -54,7 +54,6 @@ public enum App {
         }
     }
 
-    // TODO: Test this
     /// Validates if an app supports a mode. The given mode is optional and this defaults to `true` if the mode is `nil`.
     func supports(mode: Mode?) -> Bool {
         guard let mode = mode else {
@@ -67,7 +66,7 @@ public enum App {
         case .googleMaps:
             return true
         case .citymapper, .transit:
-            return mode != .transit
+            return mode == .transit
         case .lyft, .uber:
             return mode == .taxi
         case .navigon:
