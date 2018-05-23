@@ -29,7 +29,7 @@ class KarteTests: XCTestCase {
         let namedLoc = Location(name: "Named Location", coordinate: dummyCoordinate)
         let fullLoc = Location(name: "Full Location", address: "Location Address", coordinate: dummyCoordinate)
 
-        XCTAssertEqual(try! MapsApp.googleMaps.queryString(origin: anonLoc, destination: namedLoc, mode: nil), "comgooglemaps://maps?daddr=10.0,10.0+(Named%20Location)&saddr=10.0,10.0")
+        XCTAssertEqual(try! MapsApp.googleMaps.queryString(origin: anonLoc, destination: namedLoc, mode: nil), "comgooglemaps://maps?daddr=10.0,10.0&saddr=10.0,10.0")
         XCTAssertEqual(try! MapsApp.citymapper.queryString(origin: namedLoc, destination: fullLoc, mode: nil), "citymapper://directions?endaddress=Location%20Address&endcoord=10.0,10.0&endname=Full%20Location&startcoord=10.0,10.0&startname=Named%20Location")
         XCTAssertEqual(try! MapsApp.transit.queryString(origin: anonLoc, destination: namedLoc, mode: nil), "transit://directions?from=10.0,10.0&to=10.0,10.0")
         XCTAssertEqual(try! MapsApp.lyft.queryString(origin: anonLoc, destination: namedLoc, mode: nil), "lyft://ridetype?id=lyft&destination[latitude]=10.0&destination[longitude]=10.0&pickup[latitude]=10.0&pickup[longitude]=10.0")

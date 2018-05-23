@@ -65,20 +65,9 @@ public enum MapsApp {
             _ = try mode?.appleMaps()
             return ""
         case .googleMaps:
-            var originStr = origin?.coordString
-            if let name = origin?.name {
-                originStr?.append("+(\(name))")
-            }
-            parameters.set("saddr", originStr)
-
-            var destinationStr = destination.coordString
-            if let name = destination.name {
-                destinationStr += "+(\(name))"
-            }
-            parameters.set("daddr", destinationStr)
-
+            parameters.set("saddr", origin?.coordString)
+            parameters.set("daddr", destination.coordString)
             parameters.set("directionsmode", try mode?.supported(by: self))
-
             return "\(self.urlScheme)maps?\(parameters.urlParameters)"
         case .citymapper:
             _ = try mode?.supported(by: self)
