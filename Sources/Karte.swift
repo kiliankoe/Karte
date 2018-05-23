@@ -50,9 +50,8 @@ public enum Karte {
         }
 
         guard let url = URL(string: try app.queryString(origin: origin, destination: destination, mode: mode)) else {
-            // There's not really a lot the user could do about this, is there?
-            // Maybe fail hard here and validate through tests?
-            throw Error.malformedURL
+            assertionFailure("Failed to create URL for \(app)")
+            return
         }
 
         UIApplication.shared.open(url, completionHandler: nil)
