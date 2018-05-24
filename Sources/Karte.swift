@@ -18,7 +18,7 @@ public enum Karte {
     /// - Warning: For this to return `true` in any case, the necessary url schemes have to be included in your app's Info.plist.
     /// Please see Karte's README for additional details.
     public static func isInstalled(_ app: App) -> Bool {
-        guard app != .appleMaps else { return true }
+        guard app != .appleMaps else { return true } // FIXME: See issue #3
         guard let url = URL(string: app.urlScheme) else { return false }
         return UIApplication.shared.canOpenURL(url)
     }
