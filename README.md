@@ -29,7 +29,7 @@ Launch a specific app with directions.
 ```swift
 let coordinate = CLLocationCoordinate2D(latitude: 52.5162746, longitude: 13.3755153)
 let berlin = Location(name: "Brandenburger Tor Berlin", coordinate: coordinate)
-try? Karte.launch(app: .googleMaps, destination: berlin)
+Karte.launch(app: .googleMaps, destination: berlin)
 ```
 
 Or directly present the user with an action sheet listing all installed navigation apps to pick from.
@@ -48,6 +48,7 @@ let alert = Karte.createPicker(destination: location)
 
 `.launch()`, `.presentPicker()` and `.createPicker()` have a few extra parameters with default values set that you can change to your liking. Most important to note would be an origin location, which can of course also be specified. Leaving it blank defaults to the user's current location in most apps.
 
+A mode of transport can also be specified, which would then filter unsupported apps from the picker. Be aware that trying to launch an app directly with a specific mode of transport will verify if the app supports that mode and throw an `Error.unsupportedMode` otherwise.
 
 
 ## Caveat
