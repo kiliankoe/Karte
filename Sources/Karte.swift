@@ -23,19 +23,37 @@ public enum Karte {
         return UIApplication.shared.canOpenURL(url)
     }
 
+    /// Try to launch a navigation app with the given parameters.
+    ///
+    /// - Parameters:
+    ///   - app: the app to be launched
+    ///   - origin: an optional origin location, defaults to the user's locatino if left empty in most apps
+    ///   - destination: the location to route to
+    public static func launch(app: App,
+                              origin: LocationRepresentable? = nil,
+                              destination: LocationRepresentable) {
+        try? _launch(app: app, origin: origin, destination: destination, mode: nil)
+    }
+
     /// Try to launch a navigation app with the given parameters
     ///
     /// - Parameters:
     ///   - app: the app to be launched
     ///   - origin: an optional origin location, defaults to the user's location if left empty in most apps
     ///   - destination: the location to route to
-    ///   - mode: an optional mode of transport to use
+    ///   - mode: mode of transport to use
     /// - Throws: `Karte.Error.unsupportedMode` if the chosen mode is not supported by the target app
     public static func launch(app: App,
                               origin: LocationRepresentable? = nil,
                               destination: LocationRepresentable,
-                              mode: Mode? = nil) throws {
+                              mode: Mode) throws {
+        try _launch(app: app, origin: origin, destination: destination, mode: mode)
+    }
 
+    private static func _launch(app: App,
+                                origin: LocationRepresentable?,
+                                destination: LocationRepresentable,
+                                mode: Mode?) throws {
         guard app != .appleMaps else {
             // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to the route, but show search boxes with prefilled content instead.
             let modeKey = (mode?.identifier(for: .appleMaps) as? [String: String]) ?? [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
@@ -81,7 +99,7 @@ public enum Karte {
             .filter { $0.supports(mode: mode) } // defaults to true if mode is nil
             .map { app in
                 return UIAlertAction(title: app.name, style: .default, handler: { _ in
-                    try? self.launch(app: app, origin: origin, destination: destination, mode: mode)
+                    try? self._launch(app: app, origin: origin, destination: destination, mode: mode)
                 })
             }
             .forEach { alert.addAction($0) }
