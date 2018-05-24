@@ -55,6 +55,7 @@ public enum Karte {
                                 destination: LocationRepresentable,
                                 mode: Mode?) throws {
         guard app != .appleMaps else {
+            guard app.supports(mode: mode) else { throw Error.unsupportedMode }
             // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to the route, but show search boxes with prefilled content instead.
             let modeKey = (mode?.identifier(for: .appleMaps) as? [String: String]) ?? [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
             MKMapItem.openMaps(with: [origin, destination].compactMap { $0?.mapItem }, launchOptions: modeKey)
