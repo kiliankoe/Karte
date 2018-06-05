@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-public enum Mode {
+public enum KMode {
     case walking
     case bicycling
     case driving
@@ -20,7 +20,7 @@ public enum Mode {
     ///
     /// - Parameter app: navigation app
     /// - Returns: For Apple Maps a `[String:String]`, `String` for anything else. `nil` if irrelevant.
-    func identifier(for app: App) -> Any? { // swiftlint:disable:this cyclomatic_complexity
+    func identifier(for app: KApp) -> Any? { // swiftlint:disable:this cyclomatic_complexity
         switch app {
         case .appleMaps:
             switch self {

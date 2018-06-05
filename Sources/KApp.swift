@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum App {
+public enum KApp {
     case appleMaps
     case googleMaps // https://developers.google.com/maps/documentation/ios/urlscheme
     case citymapper
@@ -20,7 +20,7 @@ public enum App {
     case yandex
     case moovit
 
-    static var all: [App] {
+    static var all: [KApp] {
         return [.appleMaps, .googleMaps, .citymapper, .transit, .lyft, .uber, .navigon, .waze, .yandex, .moovit]
     }
 
@@ -55,7 +55,7 @@ public enum App {
     }
 
     /// Validates if an app supports a mode. The given mode is optional and this defaults to `true` if the mode is `nil`.
-    func supports(mode: Mode?) -> Bool {
+    func supports(mode: KMode?) -> Bool {
         guard let mode = mode else {
             return true
         }
@@ -83,7 +83,7 @@ public enum App {
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
     /// Build a query string for this app using the parameters. Returns nil if a mode is specified, but not supported by this app.
-    func queryString(origin: LocationRepresentable?, destination: LocationRepresentable, mode: Mode?) -> String? {
+    func queryString(origin: KLocationRepresentable?, destination: KLocationRepresentable, mode: KMode?) -> String? {
         guard self.supports(mode: mode) else {
             // if a mode is present, validate if the app supports it, otherwise we don't care
             return nil

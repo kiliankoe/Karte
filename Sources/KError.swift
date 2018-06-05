@@ -8,6 +8,6 @@
 
 import Foundation
 
-public enum Error: Swift.Error {
+public enum KError: Swift.Error {
     case unsupportedMode
 }
