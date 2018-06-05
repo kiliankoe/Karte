@@ -11,7 +11,7 @@ import struct CoreLocation.CLLocationCoordinate2D
 import class MapKit.MKMapItem
 import class MapKit.MKPlacemark
 
-public protocol LocationRepresentable {
+public protocol KLocationRepresentable {
     var latitude: Double { get }
     var longitude: Double { get }
     /// - Note: This property is not supported by all navigation apps.
@@ -19,7 +19,7 @@ public protocol LocationRepresentable {
     var address: String? { get }
 }
 
-extension LocationRepresentable {
+extension KLocationRepresentable {
     internal var mapItem: MKMapItem {
         let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude))
         let mapItem = MKMapItem(placemark: placemark)
@@ -32,7 +32,7 @@ extension LocationRepresentable {
     }
 }
 
-extension CLLocationCoordinate2D: LocationRepresentable {
+extension CLLocationCoordinate2D: KLocationRepresentable {
     public var name: String? {
         return nil
     }
@@ -42,7 +42,7 @@ extension CLLocationCoordinate2D: LocationRepresentable {
     }
 }
 
-extension Location: LocationRepresentable {
+extension KLocation: KLocationRepresentable {
     public var latitude: Double {
         return self.coordinate.latitude
     }

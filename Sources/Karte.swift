@@ -17,7 +17,7 @@ public enum Karte {
     /// - Returns: `true` if the app is installed
     /// - Warning: For this to return `true` in any case, the necessary url schemes have to be included in your app's Info.plist.
     /// Please see Karte's README for additional details.
-    public static func isInstalled(_ app: App) -> Bool {
+    public static func isInstalled(_ app: KApp) -> Bool {
         guard app != .appleMaps else { return true } // FIXME: See issue #3
         guard let url = URL(string: app.urlScheme) else { return false }
         return UIApplication.shared.canOpenURL(url)
@@ -29,9 +29,9 @@ public enum Karte {
     ///   - app: the app to be launched
     ///   - origin: an optional origin location, defaults to the user's locatino if left empty in most apps
     ///   - destination: the location to route to
-    public static func launch(app: App,
-                              origin: LocationRepresentable? = nil,
-                              destination: LocationRepresentable) {
+    public static func launch(app: KApp,
+                              origin: KLocationRepresentable? = nil,
+                              destination: KLocationRepresentable) {
         try? _launch(app: app, origin: origin, destination: destination, mode: nil)
     }
 
@@ -43,19 +43,19 @@ public enum Karte {
     ///   - destination: the location to route to
     ///   - mode: mode of transport to use
     /// - Throws: `Karte.Error.unsupportedMode` if the chosen mode is not supported by the target app
-    public static func launch(app: App,
-                              origin: LocationRepresentable? = nil,
-                              destination: LocationRepresentable,
-                              mode: Mode) throws {
+    public static func launch(app: KApp,
+                              origin: KLocationRepresentable? = nil,
+                              destination: KLocationRepresentable,
+                              mode: KMode) throws {
         try _launch(app: app, origin: origin, destination: destination, mode: mode)
     }
 
-    private static func _launch(app: App,
-                                origin: LocationRepresentable?,
-                                destination: LocationRepresentable,
-                                mode: Mode?) throws {
+    private static func _launch(app: KApp,
+                                origin: KLocationRepresentable?,
+                                destination: KLocationRepresentable,
+                                mode: KMode?) throws {
         guard app != .appleMaps else {
-            guard app.supports(mode: mode) else { throw Error.unsupportedMode }
+            guard app.supports(mode: mode) else { throw KError.unsupportedMode }
             // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to the route, but show search boxes with prefilled content instead.
             let modeKey = (mode?.identifier(for: .appleMaps) as? [String: String]) ?? [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
             MKMapItem.openMaps(with: [origin, destination].compactMap { $0?.mapItem }, launchOptions: modeKey)
@@ -63,7 +63,7 @@ public enum Karte {
         }
 
         guard let queryString = app.queryString(origin: origin, destination: destination, mode: mode) else {
-            throw Error.unsupportedMode
+            throw KError.unsupportedMode
         }
 
         guard let url = URL(string: queryString) else {
@@ -86,16 +86,16 @@ public enum Karte {
     ///   - cancel: label for the cancel button, defaults to "Cancel"
     ///   - style: the `UIAlertController`'s style, defaults to `.actionSheet`
     /// - Returns: the alert view controller
-    public static func createPicker(origin: LocationRepresentable? = nil,
-                                    destination: LocationRepresentable,
-                                    mode: Mode? = nil,
+    public static func createPicker(origin: KLocationRepresentable? = nil,
+                                    destination: KLocationRepresentable,
+                                    mode: KMode? = nil,
                                     title: String? = nil,
                                     message: String? = nil,
                                     cancel: String = "Cancel",
                                     style: UIAlertControllerStyle = .actionSheet) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
 
-        App.all
+        KApp.all
             .filter(self.isInstalled)
             .filter { $0.supports(mode: mode) } // defaults to true if mode is nil
             .map { app in
@@ -121,9 +121,9 @@ public enum Karte {
     ///   - message: an optional message for the `UIAlertController`
     ///   - cancel: label for the cancel button, defaults to "Cancel"
     ///   - style: the `UIAlertController`'s style, defaults to `.actionSheet`
-    public static func presentPicker(origin: LocationRepresentable? = nil,
-                                     destination: LocationRepresentable,
-                                     mode: Mode? = nil,
+    public static func presentPicker(origin: KLocationRepresentable? = nil,
+                                     destination: KLocationRepresentable,
+                                     mode: KMode? = nil,
                                      presentOn viewcontroller: UIViewController,
                                      title: String? = nil,
                                      message: String? = nil,

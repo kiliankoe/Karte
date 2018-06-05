@@ -11,7 +11,7 @@ import struct CoreLocation.CLLocationCoordinate2D
 import class MapKit.MKMapItem
 import class MapKit.MKPlacemark
 
-public struct Location {
+public struct KLocation {
     public let coordinate: CLLocationCoordinate2D
     public let name: String?
     public let address: String?

@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		396DF69A1EA4E4EC00D3F322 /* LocationRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396DF6991EA4E4EC00D3F322 /* LocationRepresentable.swift */; };
-		39D5B7121EA012D600691937 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7111EA012D600691937 /* Location.swift */; };
+		396DF69A1EA4E4EC00D3F322 /* KLocationRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396DF6991EA4E4EC00D3F322 /* KLocationRepresentable.swift */; };
+		39D5B7121EA012D600691937 /* KLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7111EA012D600691937 /* KLocation.swift */; };
 		39D5B7141EA01DB400691937 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7131EA01DB400691937 /* Extensions.swift */; };
-		39D5B7161EA02A5200691937 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7151EA02A5200691937 /* Mode.swift */; };
-		39D5B7181EA02A7000691937 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7171EA02A7000691937 /* App.swift */; };
-		39D5B71A1EA02A8000691937 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7191EA02A8000691937 /* Error.swift */; };
+		39D5B7161EA02A5200691937 /* KMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7151EA02A5200691937 /* KMode.swift */; };
+		39D5B7181EA02A7000691937 /* KApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7171EA02A7000691937 /* KApp.swift */; };
+		39D5B71A1EA02A8000691937 /* KError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D5B7191EA02A8000691937 /* KError.swift */; };
 		52D6D9871BEFF229002C0205 /* Karte.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Karte.framework */; };
 		52D6D9981BEFF375002C0205 /* Karte.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* Karte.swift */; };
 		52D6D99B1BEFF375002C0205 /* KarteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* KarteTests.swift */; };
@@ -30,12 +30,12 @@
 
 /* Begin PBXFileReference section */
 		39002DAB20A990F7004D277C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		396DF6991EA4E4EC00D3F322 /* LocationRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationRepresentable.swift; path = Sources/LocationRepresentable.swift; sourceTree = "<group>"; };
-		39D5B7111EA012D600691937 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Sources/Location.swift; sourceTree = "<group>"; };
+		396DF6991EA4E4EC00D3F322 /* KLocationRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KLocationRepresentable.swift; path = Sources/KLocationRepresentable.swift; sourceTree = "<group>"; };
+		39D5B7111EA012D600691937 /* KLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KLocation.swift; path = Sources/KLocation.swift; sourceTree = "<group>"; };
 		39D5B7131EA01DB400691937 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Sources/Extensions.swift; sourceTree = "<group>"; };
-		39D5B7151EA02A5200691937 /* Mode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mode.swift; path = Sources/Mode.swift; sourceTree = "<group>"; };
-		39D5B7171EA02A7000691937 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = App.swift; path = Sources/App.swift; sourceTree = "<group>"; };
-		39D5B7191EA02A8000691937 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Error.swift; path = Sources/Error.swift; sourceTree = "<group>"; };
+		39D5B7151EA02A5200691937 /* KMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KMode.swift; path = Sources/KMode.swift; sourceTree = "<group>"; };
+		39D5B7171EA02A7000691937 /* KApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KApp.swift; path = Sources/KApp.swift; sourceTree = "<group>"; };
+		39D5B7191EA02A8000691937 /* KError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KError.swift; path = Sources/KError.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Karte.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Karte.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Karte Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Karte Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9961BEFF375002C0205 /* Karte.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Karte.swift; path = Sources/Karte.swift; sourceTree = "<group>"; };
@@ -68,11 +68,11 @@
 			children = (
 				39002DAB20A990F7004D277C /* README.md */,
 				52D6D9961BEFF375002C0205 /* Karte.swift */,
-				39D5B7191EA02A8000691937 /* Error.swift */,
-				39D5B7171EA02A7000691937 /* App.swift */,
-				39D5B7151EA02A5200691937 /* Mode.swift */,
-				39D5B7111EA012D600691937 /* Location.swift */,
-				396DF6991EA4E4EC00D3F322 /* LocationRepresentable.swift */,
+				39D5B7191EA02A8000691937 /* KError.swift */,
+				39D5B7171EA02A7000691937 /* KApp.swift */,
+				39D5B7151EA02A5200691937 /* KMode.swift */,
+				39D5B7111EA012D600691937 /* KLocation.swift */,
+				396DF6991EA4E4EC00D3F322 /* KLocationRepresentable.swift */,
 				39D5B7131EA01DB400691937 /* Extensions.swift */,
 				52D6D9971BEFF375002C0205 /* KarteTests.swift */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
@@ -241,12 +241,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39D5B7181EA02A7000691937 /* App.swift in Sources */,
-				39D5B7121EA012D600691937 /* Location.swift in Sources */,
+				39D5B7181EA02A7000691937 /* KApp.swift in Sources */,
+				39D5B7121EA012D600691937 /* KLocation.swift in Sources */,
 				39D5B7141EA01DB400691937 /* Extensions.swift in Sources */,
-				39D5B7161EA02A5200691937 /* Mode.swift in Sources */,
-				396DF69A1EA4E4EC00D3F322 /* LocationRepresentable.swift in Sources */,
-				39D5B71A1EA02A8000691937 /* Error.swift in Sources */,
+				39D5B7161EA02A5200691937 /* KMode.swift in Sources */,
+				396DF69A1EA4E4EC00D3F322 /* KLocationRepresentable.swift in Sources */,
+				39D5B71A1EA02A8000691937 /* KError.swift in Sources */,
 				52D6D9981BEFF375002C0205 /* Karte.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
