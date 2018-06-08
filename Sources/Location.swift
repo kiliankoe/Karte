@@ -7,9 +7,7 @@
 //
 
 import Foundation
-import struct CoreLocation.CLLocationCoordinate2D
-import class MapKit.MKMapItem
-import class MapKit.MKPlacemark
+import CoreLocation
 
 public struct Location {
     public let coordinate: CLLocationCoordinate2D
@@ -20,5 +18,10 @@ public struct Location {
         self.name = name
         self.address = address
         self.coordinate = coordinate
+    }
+
+    public init(name: String? = nil, address: String? = nil, latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        self.init(name: name, address: address, coordinate: coordinate)
     }
 }

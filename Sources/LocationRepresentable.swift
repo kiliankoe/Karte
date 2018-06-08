@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import struct CoreLocation.CLLocationCoordinate2D
-import class MapKit.MKMapItem
-import class MapKit.MKPlacemark
+import CoreLocation
+import MapKit
 
 public protocol LocationRepresentable {
     var latitude: Double { get }
@@ -29,6 +28,24 @@ extension LocationRepresentable {
 
     internal var coordString: String {
         return "\(self.latitude),\(self.longitude)"
+    }
+}
+
+extension CLLocation: LocationRepresentable {
+    public var latitude: Double {
+        return self.coordinate.latitude
+    }
+
+    public var longitude: Double {
+        return self.coordinate.longitude
+    }
+
+    public var name: String? {
+        return nil
+    }
+
+    public var address: String? {
+        return nil
     }
 }
 
