@@ -6,8 +6,6 @@
 //  Copyright © 2017 Karte. All rights reserved.
 //
 
-import Foundation
-
 public enum Error: Swift.Error {
     case unsupportedMode
 }

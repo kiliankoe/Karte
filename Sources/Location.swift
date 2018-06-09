@@ -6,7 +6,6 @@
 //  Copyright © 2017 Karte. All rights reserved.
 //
 
-import Foundation
 import CoreLocation
 
 public struct Location {

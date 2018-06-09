@@ -6,8 +6,6 @@
 //  Copyright © 2017 Karte. All rights reserved.
 //
 
-import Foundation
-
 public enum App: String {
     case appleMaps
     case googleMaps // https://developers.google.com/maps/documentation/ios/urlscheme

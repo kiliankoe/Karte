@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import struct CoreLocation.CLLocationCoordinate2D
 import MapKit
 
 public enum Karte {
