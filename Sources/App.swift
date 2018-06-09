@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum App {
+public enum App: String {
     case appleMaps
     case googleMaps // https://developers.google.com/maps/documentation/ios/urlscheme
     case citymapper

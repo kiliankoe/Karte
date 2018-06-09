@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-public enum Mode {
+public enum Mode: String {
     case walking
     case bicycling
     case driving
