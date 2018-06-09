@@ -20,7 +20,10 @@ public struct Location {
         self.coordinate = coordinate
     }
 
-    public init(name: String? = nil, address: String? = nil, latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+    public init(name: String? = nil,
+                address: String? = nil,
+                latitude: CLLocationDegrees,
+                longitude: CLLocationDegrees) {
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         self.init(name: name, address: address, coordinate: coordinate)
     }

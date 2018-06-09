@@ -20,7 +20,8 @@ public protocol LocationRepresentable {
 
 extension LocationRepresentable {
     internal var mapItem: MKMapItem {
-        let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude))
+        let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: self.latitude,
+                                                                       longitude: self.longitude))
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = self.name
         return mapItem
@@ -30,6 +31,18 @@ extension LocationRepresentable {
         return "\(self.latitude),\(self.longitude)"
     }
 }
+
+extension Location: LocationRepresentable {
+    public var latitude: Double {
+        return self.coordinate.latitude
+    }
+
+    public var longitude: Double {
+        return self.coordinate.longitude
+    }
+}
+
+// MARK: CoreLocation helpers
 
 extension CLLocation: LocationRepresentable {
     public var latitude: Double {
@@ -56,15 +69,5 @@ extension CLLocationCoordinate2D: LocationRepresentable {
 
     public var address: String? {
         return nil
-    }
-}
-
-extension Location: LocationRepresentable {
-    public var latitude: Double {
-        return self.coordinate.latitude
-    }
-
-    public var longitude: Double {
-        return self.coordinate.longitude
     }
 }

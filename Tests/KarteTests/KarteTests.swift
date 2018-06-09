@@ -32,23 +32,55 @@ class KarteTests: XCTestCase {
         let dummyCoordinate = CLLocationCoordinate2D(latitude: 10.0, longitude: 10.0)
         self.anonymousLocation = Location(coordinate: dummyCoordinate)
         self.namedLocation = Location(name: "Named Location", coordinate: dummyCoordinate)
-        self.fullLocation = Location(name: "Full Location", address: "Location Address", coordinate: dummyCoordinate)
+        self.fullLocation = Location(name: "Full Location",
+                                     address: "Location Address",
+                                     coordinate: dummyCoordinate)
     }
 
+    // swiftlint:disable line_length
     func testQueryStrings() {
-        XCTAssertEqual(App.googleMaps.queryString(origin: anonymousLocation, destination: namedLocation, mode: nil), "comgooglemaps://maps?daddr=10.0,10.0&saddr=10.0,10.0")
-        XCTAssertEqual(App.citymapper.queryString(origin: namedLocation, destination: fullLocation, mode: nil), "citymapper://directions?endaddress=Location%20Address&endcoord=10.0,10.0&endname=Full%20Location&startcoord=10.0,10.0&startname=Named%20Location")
-        XCTAssertEqual(App.transit.queryString(origin: anonymousLocation, destination: namedLocation, mode: nil), "transit://directions?from=10.0,10.0&to=10.0,10.0")
-        XCTAssertEqual(App.lyft.queryString(origin: anonymousLocation, destination: namedLocation, mode: nil), "lyft://ridetype?id=lyft&destination[latitude]=10.0&destination[longitude]=10.0&pickup[latitude]=10.0&pickup[longitude]=10.0")
-        XCTAssertEqual(App.uber.queryString(origin: anonymousLocation, destination: namedLocation, mode: nil), "uber://?action=setPickup&dropoff[latitude]=10.0&dropoff[longitude]=10.0&dropoff[nickname]=Named%20Location&pickup[latitude]=10.0&pickup[longitude]=10.0")
-        XCTAssertEqual(App.navigon.queryString(origin: anonymousLocation, destination: namedLocation, mode: nil), "navigon://coordinate/Named%20Location/10.0/10.0")
-        XCTAssertEqual(App.waze.queryString(origin: anonymousLocation, destination: namedLocation, mode: nil), "waze://?ll=10.0,10.0&navigate=yes")
-        XCTAssertEqual(App.yandex.queryString(origin: anonymousLocation, destination: namedLocation, mode: nil), "yandexnavi://build_route_on_map?lat_from=10.0&lat_to=10.0&lon_from=10.0&lon_to=10.0")
-        XCTAssertEqual(App.moovit.queryString(origin: anonymousLocation, destination: namedLocation, mode: nil), "moovit://directions?dest_lat=10.0&dest_lon=10.0&dest_name=Named%20Location&origin_lat=10.0&origin_lon=10.0")
+        XCTAssertEqual(App.googleMaps.queryString(origin: anonymousLocation,
+                                                  destination: namedLocation,
+                                                  mode: nil),
+                       "comgooglemaps://maps?daddr=10.0,10.0&saddr=10.0,10.0")
+        XCTAssertEqual(App.citymapper.queryString(origin: namedLocation,
+                                                  destination: fullLocation,
+                                                  mode: nil),
+                       "citymapper://directions?endaddress=Location%20Address&endcoord=10.0,10.0&endname=Full%20Location&startcoord=10.0,10.0&startname=Named%20Location")
+        XCTAssertEqual(App.transit.queryString(origin: anonymousLocation,
+                                               destination: namedLocation,
+                                               mode: nil),
+                       "transit://directions?from=10.0,10.0&to=10.0,10.0")
+        XCTAssertEqual(App.lyft.queryString(origin: anonymousLocation,
+                                            destination: namedLocation,
+                                            mode: nil),
+                       "lyft://ridetype?id=lyft&destination[latitude]=10.0&destination[longitude]=10.0&pickup[latitude]=10.0&pickup[longitude]=10.0")
+        XCTAssertEqual(App.uber.queryString(origin: anonymousLocation,
+                                            destination: namedLocation,
+                                            mode: nil),
+                       "uber://?action=setPickup&dropoff[latitude]=10.0&dropoff[longitude]=10.0&dropoff[nickname]=Named%20Location&pickup[latitude]=10.0&pickup[longitude]=10.0")
+        XCTAssertEqual(App.navigon.queryString(origin: anonymousLocation,
+                                               destination: namedLocation,
+                                               mode: nil),
+                       "navigon://coordinate/Named%20Location/10.0/10.0")
+        XCTAssertEqual(App.waze.queryString(origin: anonymousLocation,
+                                            destination: namedLocation,
+                                            mode: nil),
+                       "waze://?ll=10.0,10.0&navigate=yes")
+        XCTAssertEqual(App.yandex.queryString(origin: anonymousLocation,
+                                              destination: namedLocation,
+                                              mode: nil),
+                       "yandexnavi://build_route_on_map?lat_from=10.0&lat_to=10.0&lon_from=10.0&lon_to=10.0")
+        XCTAssertEqual(App.moovit.queryString(origin: anonymousLocation,
+                                              destination: namedLocation,
+                                              mode: nil),
+                       "moovit://directions?dest_lat=10.0&dest_lon=10.0&dest_name=Named%20Location&origin_lat=10.0&origin_lon=10.0")
     }
+    // swiftlint:enable line_length
 
     func testModeIdentifier() {
-        XCTAssertEqual(Mode.walking.identifier(for: .appleMaps) as? [String: String], [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking])
+        XCTAssertEqual(Mode.walking.identifier(for: .appleMaps) as? [String: String],
+                       [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking])
         XCTAssertNil(Mode.bicycling.identifier(for: .appleMaps))
 
         XCTAssertEqual(Mode.driving.identifier(for: .googleMaps) as? String, "driving")
@@ -73,7 +105,10 @@ class KarteTests: XCTestCase {
 
         do {
             try Karte.launch(app: .appleMaps, destination: dresden, mode: .bicycling)
-            try Karte.launch(app: .appleMaps, origin: berlin, destination: dresden, mode: .bicycling)
+            try Karte.launch(app: .appleMaps,
+                             origin: berlin,
+                             destination: dresden,
+                             mode: .bicycling)
             XCTFail("Launch should throw on unsupported modes")
         } catch { }
     }

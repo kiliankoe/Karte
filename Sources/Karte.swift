@@ -15,7 +15,8 @@ public enum Karte {
     ///
     /// - Parameter app: a navigation app supported by Karte
     /// - Returns: `true` if the app is installed
-    /// - Warning: For this to return `true` in any case, the necessary url schemes have to be included in your app's Info.plist.
+    /// - Warning: For this to return `true` in any case, the necessary url schemes have to be
+    ///            included in your app's Info.plist.
     /// Please see Karte's README for additional details.
     public static func isInstalled(_ app: App) -> Bool {
         guard app != .appleMaps else { return true } // FIXME: See issue #3
@@ -27,7 +28,8 @@ public enum Karte {
     ///
     /// - Parameters:
     ///   - app: the app to be launched
-    ///   - origin: an optional origin location, defaults to the user's locatino if left empty in most apps
+    ///   - origin: an optional origin location, defaults to the user's locatino if left empty in
+    ///             most apps
     ///   - destination: the location to route to
     public static func launch(app: App,
                               origin: LocationRepresentable? = nil,
@@ -39,10 +41,12 @@ public enum Karte {
     ///
     /// - Parameters:
     ///   - app: the app to be launched
-    ///   - origin: an optional origin location, defaults to the user's location if left empty in most apps
+    ///   - origin: an optional origin location, defaults to the user's location if left empty in
+    ///             most apps
     ///   - destination: the location to route to
     ///   - mode: mode of transport to use
-    /// - Throws: `Karte.Error.unsupportedMode` if the chosen mode is not supported by the target app
+    /// - Throws: `Karte.Error.unsupportedMode` if the chosen mode is not supported by the target
+    ///           app
     public static func launch(app: App,
                               origin: LocationRepresentable? = nil,
                               destination: LocationRepresentable,
@@ -56,13 +60,19 @@ public enum Karte {
                                 mode: Mode?) throws {
         guard app != .appleMaps else {
             guard app.supports(mode: mode) else { throw Error.unsupportedMode }
-            // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to the route, but show search boxes with prefilled content instead.
-            let modeKey = (mode?.identifier(for: .appleMaps) as? [String: String]) ?? [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
-            MKMapItem.openMaps(with: [origin, destination].compactMap { $0?.mapItem }, launchOptions: modeKey)
+            let mapItems = [origin, destination].compactMap { $0?.mapItem }
+            // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to
+            // the route, but show search boxes with prefilled content instead.
+            let modeKey = (mode?.identifier(for: .appleMaps) as? [String: String])
+                ?? [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
+            MKMapItem.openMaps(with: mapItems, launchOptions: modeKey)
             return
         }
 
-        guard let queryString = app.queryString(origin: origin, destination: destination, mode: mode) else {
+        guard let queryString = app.queryString(origin: origin,
+                                                destination: destination,
+                                                mode: mode)
+        else {
             throw Error.unsupportedMode
         }
 
@@ -74,13 +84,17 @@ public enum Karte {
         UIApplication.shared.open(url, completionHandler: nil)
     }
 
-    /// Return a `UIAlertController` with all supported apps the device has installed to offer an option for which app to start.
-    /// Use this instead of `Karte.presentPicker()` if you want to control the presentation of the alert view controller manually.
+    /// Return a `UIAlertController` with all supported apps the device has installed to offer an
+    /// option for which app to start.
+    /// Use this instead of `Karte.presentPicker()` if you want to control the presentation of the
+    /// alert view controller manually.
     ///
     /// - Parameters:
-    ///   - origin: an optional origin location, defaults to the user's location if left empty in most apps
+    ///   - origin: an optional origin location, defaults to the user's location if left empty in
+    ///             most apps
     ///   - destination: the location to route to
-    ///   - mode: an optional mode of transport to use, results in only those apps being shown that support this mode
+    ///   - mode: an optional mode of transport to use, results in only those apps being shown that
+    ///           support this mode
     ///   - title: an optional title for the `UIAlertController`
     ///   - message: an optional message for the `UIAlertController`
     ///   - cancel: label for the cancel button, defaults to "Cancel"
@@ -92,7 +106,8 @@ public enum Karte {
                                     title: String? = nil,
                                     message: String? = nil,
                                     cancel: String = "Cancel",
-                                    style: UIAlertControllerStyle = .actionSheet) -> UIAlertController {
+                                    style: UIAlertControllerStyle = .actionSheet)
+        -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
 
         App.all
@@ -100,7 +115,10 @@ public enum Karte {
             .filter { $0.supports(mode: mode) } // defaults to true if mode is nil
             .map { app in
                 return UIAlertAction(title: app.name, style: .default, handler: { _ in
-                    try? self._launch(app: app, origin: origin, destination: destination, mode: mode)
+                    try? self._launch(app: app,
+                                      origin: origin,
+                                      destination: destination,
+                                      mode: mode)
                 })
             }
             .forEach { alert.addAction($0) }
@@ -110,12 +128,15 @@ public enum Karte {
         return alert
     }
 
-    /// Present a `UIAlertController` with all supported apps the device has installed to offer an option for which app to start.
+    /// Present a `UIAlertController` with all supported apps the device has installed to offer an
+    /// option for which app to start.
     ///
     /// - Parameters:
-    ///   - origin: an optional origin location, defaults to the user's location if left empty in most apps
+    ///   - origin: an optional origin location, defaults to the user's location if left empty in
+    ///             most apps
     ///   - destination: the location to route to
-    ///   - mode: an optional mode of transport to use, results in only those apps being shown that support this mode
+    ///   - mode: an optional mode of transport to use, results in only those apps being shown that
+    ///           support this mode
     ///   - viewcontroller: a `UIViewController` to present the `UIAlertController` on
     ///   - title: an optional title for the `UIAlertController`
     ///   - message: an optional message for the `UIAlertController`
@@ -130,7 +151,13 @@ public enum Karte {
                                      cancel: String = "Cancel",
                                      style: UIAlertControllerStyle = .actionSheet) {
 
-        let alert = createPicker(origin: origin, destination: destination, mode: mode, title: title, message: message, cancel: cancel, style: style)
+        let alert = createPicker(origin: origin,
+                                 destination: destination,
+                                 mode: mode,
+                                 title: title,
+                                 message: message,
+                                 cancel: cancel,
+                                 style: style)
 
         OperationQueue.main.addOperation {
             viewcontroller.present(alert, animated: true, completion: nil)

@@ -19,15 +19,21 @@ public enum Mode: String {
     /// Look up the transport mode identifier name for a given app.
     ///
     /// - Parameter app: navigation app
-    /// - Returns: For Apple Maps a `[String:String]`, `String` for anything else. `nil` if irrelevant.
+    /// - Returns: For Apple Maps a `[String:String]`, `String` for anything else. `nil` if
+    ///            irrelevant.
     func identifier(for app: App) -> Any? { // swiftlint:disable:this cyclomatic_complexity
         switch app {
         case .appleMaps:
             switch self {
-            case .walking: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]
-            case .driving: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-            case .transit: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeTransit]
-            case .taxi: return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving] // it is supported, but there's no key for this...
+            case .walking:
+                return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]
+            case .driving:
+                return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+            case .transit:
+                return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeTransit]
+            case .taxi:
+                // it is supported, but there's no key for this...
+                return [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
             default: return nil
             }
         case .googleMaps:
@@ -36,7 +42,9 @@ public enum Mode: String {
             case .bicycling: return "bicycling"
             case .driving: return "driving"
             case .transit: return "transit"
-            case .taxi: return "driving" // just like Apple Maps this actually is supported, but the key isn't specified in the docs... meh.
+            // just like Apple Maps this actually is supported, but the key isn't specified in the
+            // docs... meh.
+            case .taxi: return "driving"
             }
         case .citymapper, .transit:
             return nil

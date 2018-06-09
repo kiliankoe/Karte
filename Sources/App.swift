@@ -21,7 +21,18 @@ public enum App: String {
     case moovit
 
     static var all: [App] {
-        return [.appleMaps, .googleMaps, .citymapper, .transit, .lyft, .uber, .navigon, .waze, .yandex, .moovit]
+        return [
+            .appleMaps,
+            .googleMaps,
+            .citymapper,
+            .transit,
+            .lyft,
+            .uber,
+            .navigon,
+            .waze,
+            .yandex,
+            .moovit
+        ]
     }
 
     var urlScheme: String {
@@ -54,7 +65,8 @@ public enum App: String {
         }
     }
 
-    /// Validates if an app supports a mode. The given mode is optional and this defaults to `true` if the mode is `nil`.
+    /// Validates if an app supports a mode. The given mode is optional and this defaults to `true`
+    /// if the mode is `nil`.
     func supports(mode: Mode?) -> Bool {
         guard let mode = mode else {
             return true
@@ -82,8 +94,11 @@ public enum App: String {
 
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
-    /// Build a query string for this app using the parameters. Returns nil if a mode is specified, but not supported by this app.
-    func queryString(origin: LocationRepresentable?, destination: LocationRepresentable, mode: Mode?) -> String? {
+    /// Build a query string for this app using the parameters. Returns nil if a mode is specified,
+    /// but not supported by this app.
+    func queryString(origin: LocationRepresentable?,
+                     destination: LocationRepresentable,
+                     mode: Mode?) -> String? {
         guard self.supports(mode: mode) else {
             // if a mode is present, validate if the app supports it, otherwise we don't care
             return nil
@@ -133,9 +148,12 @@ public enum App: String {
             parameters.set("dropoff[nickname]", destination.name)
             return "\(self.urlScheme)?\(parameters.urlParameters)"
         case .navigon:
-            let name = destination.name ?? "Destination" // Docs are unclear about the name being omitted
+            // Docs are unclear about the name being omitted
+            let name = destination.name ?? "Destination"
+            // swiftlint:disable:next line_length
             return "\(self.urlScheme)coordinate/\(name.urlQuery ?? "")/\(destination.longitude)/\(destination.latitude)"
         case .waze:
+            // swiftlint:disable:next line_length
             return "\(self.urlScheme)?ll=\(destination.latitude),\(destination.longitude)&navigate=yes"
         case .yandex:
             parameters.set("lat_from", origin?.latitude)
