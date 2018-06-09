@@ -35,14 +35,6 @@ class KarteTests: XCTestCase {
         self.fullLocation = Location(name: "Full Location", address: "Location Address", coordinate: dummyCoordinate)
     }
 
-    func testExistenceOfMapsApps() {
-        var count = 0
-        for _ in iterateEnum(App.self) {
-            count += 1
-        }
-        XCTAssertEqual(Set(App.all).count, count, "Please ensure that `MapsApp.all` contains all cases")
-    }
-
     func testQueryStrings() {
         XCTAssertEqual(App.googleMaps.queryString(origin: anonymousLocation, destination: namedLocation, mode: nil), "comgooglemaps://maps?daddr=10.0,10.0&saddr=10.0,10.0")
         XCTAssertEqual(App.citymapper.queryString(origin: namedLocation, destination: fullLocation, mode: nil), "citymapper://directions?endaddress=Location%20Address&endcoord=10.0,10.0&endname=Full%20Location&startcoord=10.0,10.0&startname=Named%20Location")
@@ -84,16 +76,5 @@ class KarteTests: XCTestCase {
             try Karte.launch(app: .appleMaps, origin: berlin, destination: dresden, mode: .bicycling)
             XCTFail("Launch should throw on unsupported modes")
         } catch { }
-    }
-}
-
-// hacky af, but thanks to http://stackoverflow.com/a/28341290/1843020
-private func iterateEnum<T: Hashable>(_: T.Type) -> AnyIterator<T> {
-    var idx = 0
-    return AnyIterator {
-        let next = withUnsafeBytes(of: &idx) { $0.load(as: T.self) }
-        if next.hashValue != idx { return nil }
-        idx += 1
-        return next
     }
 }
