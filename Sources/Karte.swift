@@ -44,7 +44,7 @@ public enum Karte {
     ///             most apps
     ///   - destination: the location to route to
     ///   - mode: mode of transport to use
-    /// - Throws: `Karte.Error.unsupportedMode` if the chosen mode is not supported by the target
+    /// - Throws: `KarteError.unsupportedMode` if the chosen mode is not supported by the target
     ///           app
     public static func launch(app: App,
                               origin: LocationRepresentable? = nil,
@@ -58,7 +58,7 @@ public enum Karte {
                                 destination: LocationRepresentable,
                                 mode: Mode?) throws {
         guard app != .appleMaps else {
-            guard app.supports(mode: mode) else { throw Error.unsupportedMode }
+            guard app.supports(mode: mode) else { throw KarteError.unsupportedMode }
             let mapItems = [origin, destination].compactMap { $0?.mapItem }
             // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to
             // the route, but show search boxes with prefilled content instead.
@@ -72,7 +72,7 @@ public enum Karte {
                                                 destination: destination,
                                                 mode: mode)
         else {
-            throw Error.unsupportedMode
+            throw KarteError.unsupportedMode
         }
 
         guard let url = URL(string: queryString) else {
