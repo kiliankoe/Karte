@@ -15,6 +15,7 @@ public enum App: String {
     case uber
     case navigon // http://www.navigon.com/portal/common/faq/files/NAVIGON_AppInteract.pdf
     case waze
+    case dbnavigator
     case yandex
     case moovit
 
@@ -28,6 +29,7 @@ public enum App: String {
             .uber,
             .navigon,
             .waze,
+            .dbnavigator,
             .yandex,
             .moovit
         ]
@@ -43,6 +45,7 @@ public enum App: String {
         case .uber: return "uber://"
         case .navigon: return "navigon://"
         case .waze: return "waze://"
+        case .dbnavigator: return "dbnavigator://"
         case .yandex: return "yandexnavi://"
         case .moovit: return "moovit://"
         }
@@ -58,6 +61,7 @@ public enum App: String {
         case .uber: return "Uber"
         case .navigon: return "Navigon"
         case .waze: return "Waze"
+        case .dbnavigator: return "DB Navigator"
         case .yandex: return "Yandex.Navi"
         case .moovit: return "Moovit"
         }
@@ -83,6 +87,8 @@ public enum App: String {
             return mode == .driving || mode == .walking
         case .waze:
             return mode == .driving
+        case .dbnavigator:
+            return mode == .transit
         case .yandex:
             return true
         case .moovit:
@@ -153,6 +159,18 @@ public enum App: String {
         case .waze:
             // swiftlint:disable:next line_length
             return "\(self.urlScheme)?ll=\(destination.latitude),\(destination.longitude)&navigate=yes"
+        case .dbnavigator:
+            if let origin = origin {
+                parameters.set("SKOORD", 1)
+                parameters.set("SNAME", origin.name)
+                parameters.set("SY", Int(origin.latitude * 1_000_000))
+                parameters.set("SX", Int(origin.longitude * 1_000_000))
+            }
+            parameters.set("ZKOORD", 1)
+            parameters.set("ZNAME", destination.name)
+            parameters.set("ZY", Int(destination.latitude * 1_000_000))
+            parameters.set("ZX", Int(destination.longitude * 1_000_000))
+            return "\(self.urlScheme)query?\(parameters.urlParameters)&start"
         case .yandex:
             parameters.set("lat_from", origin?.latitude)
             parameters.set("lon_from", origin?.longitude)

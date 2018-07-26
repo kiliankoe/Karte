@@ -9,7 +9,7 @@
 
 Small library for opening a location or route in other popular iOS navigation apps.
 
-Currently supported are **Apple Maps, Google Maps, Citymapper, Transit, Lyft, Uber, Navigon, Waze, Yandex.Navi and Moovit**.
+Currently supported are **Apple Maps, Google Maps, Citymapper, Transit, Lyft, Uber, Navigon, Waze, DB Navigator, Yandex.Navi and Moovit**.
 
 Know of any other navigation apps that can be opened via URL scheme or universal link? Please open an issue and/or PR 🙃
 
@@ -67,6 +67,7 @@ The section to add to your `Info.plist` should look like this:
         <string>uber</string>
         <string>navigon</string>
         <string>waze</string>
+        <string>dbnavigator</string>
         <string>yandexnavi</string>
         <string>moovit</string>
     </array>

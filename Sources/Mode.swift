@@ -53,6 +53,8 @@ public enum Mode: String {
             return nil
         case .waze:
             return nil
+        case .dbnavigator:
+            return nil
         case .yandex:
             return nil
         case .moovit:
