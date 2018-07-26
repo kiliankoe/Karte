@@ -66,6 +66,10 @@ class KarteTests: XCTestCase {
                                             destination: namedLocation,
                                             mode: nil),
                        "waze://?ll=10.0,10.0&navigate=yes")
+        XCTAssertEqual(App.dbnavigator.queryString(origin: anonymousLocation,
+                                                   destination: namedLocation,
+                                                   mode: nil),
+                       "dbnavigator://query?SKOORD=1&SX=10000000&SY=10000000&ZKOORD=1&ZNAME=Named%20Location&ZX=10000000&ZY=10000000&start")
         XCTAssertEqual(App.yandex.queryString(origin: anonymousLocation,
                                               destination: namedLocation,
                                               mode: nil),
