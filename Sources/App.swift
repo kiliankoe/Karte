@@ -51,7 +51,7 @@ public enum App: String {
         }
     }
 
-    var name: String {
+    public var name: String {
         switch self {
         case .appleMaps: return "Apple Maps"
         case .googleMaps: return "Google Maps"
