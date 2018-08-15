@@ -60,10 +60,17 @@ public enum Karte {
         guard app != .appleMaps else {
             guard app.supports(mode: mode) else { throw KarteError.unsupportedMode }
             let mapItems = [origin, destination].compactMap { $0?.mapItem }
+            // Fallback for the default driving mode on versions before iOS 10
+            let defaultDirectionMode: String
+            if #available(iOS 10.0, *) {
+                defaultDirectionMode = MKLaunchOptionsDirectionsModeDefault
+            } else {
+                defaultDirectionMode = MKLaunchOptionsDirectionsModeDriving
+            }
             // If mode (as in the launchOptions below) stays nil, Apple Maps won't go directly to
             // the route, but show search boxes with prefilled content instead.
             let modeKey = (mode?.identifier(for: .appleMaps) as? [String: String])
-                ?? [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault]
+                ?? [MKLaunchOptionsDirectionsModeKey: defaultDirectionMode]
             MKMapItem.openMaps(with: mapItems, launchOptions: modeKey)
             return
         }
@@ -80,7 +87,11 @@ public enum Karte {
             return
         }
 
-        UIApplication.shared.open(url, completionHandler: nil)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
     }
 
     /// Return a `UIAlertController` with all supported apps the device has installed to offer an
