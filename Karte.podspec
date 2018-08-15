@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name        = "Karte"
-  s.version     = "2.1.1"
+  s.version     = "2.1.2"
   s.summary     = "Conveniently launch directions in other iOS map apps"
   s.description = <<-DESC
     Small library for opening a location or route in other popular iOS apps.
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author           = { "Kilian Koeltzsch" => "me@kilian.io" }
   s.social_media_url = "https://twitter.com/kiliankoe"
 
-  s.ios.deployment_target = "10.0"
+  s.ios.deployment_target = "9.0"
 
   s.source = { :git => "https://github.com/kiliankoe/Karte.git", :tag => s.version.to_s }
 

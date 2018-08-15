@@ -20,7 +20,8 @@ public protocol LocationRepresentable {
 extension LocationRepresentable {
     internal var mapItem: MKMapItem {
         let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: self.latitude,
-                                                                       longitude: self.longitude))
+                                                                       longitude: self.longitude),
+                                    addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = self.name
         return mapItem
