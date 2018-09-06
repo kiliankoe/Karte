@@ -109,6 +109,7 @@ public enum Karte {
     ///   - message: an optional message for the `UIAlertController`
     ///   - cancel: label for the cancel button, defaults to "Cancel"
     ///   - style: the `UIAlertController`'s style, defaults to `.actionSheet`
+    ///   - completion: handler called with the selected after launching it.
     /// - Returns: the alert view controller
     public static func createPicker(origin: LocationRepresentable? = nil,
                                     destination: LocationRepresentable,
@@ -116,7 +117,8 @@ public enum Karte {
                                     title: String? = nil,
                                     message: String? = nil,
                                     cancel: String = "Cancel",
-                                    style: UIAlertControllerStyle = .actionSheet)
+                                    style: UIAlertControllerStyle = .actionSheet,
+                                    completion: ((App) -> Void)? = nil)
         -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
 
@@ -129,6 +131,7 @@ public enum Karte {
                                       origin: origin,
                                       destination: destination,
                                       mode: mode)
+                    completion?(app)
                 })
             }
             .forEach { alert.addAction($0) }
@@ -152,6 +155,7 @@ public enum Karte {
     ///   - message: an optional message for the `UIAlertController`
     ///   - cancel: label for the cancel button, defaults to "Cancel"
     ///   - style: the `UIAlertController`'s style, defaults to `.actionSheet`
+    ///   - completion: handler called with the selected app after launching it.
     public static func presentPicker(origin: LocationRepresentable? = nil,
                                      destination: LocationRepresentable,
                                      mode: Mode? = nil,
@@ -159,7 +163,8 @@ public enum Karte {
                                      title: String? = nil,
                                      message: String? = nil,
                                      cancel: String = "Cancel",
-                                     style: UIAlertControllerStyle = .actionSheet) {
+                                     style: UIAlertControllerStyle = .actionSheet,
+                                     completion: ((App) -> Void)? = nil) {
 
         let alert = createPicker(origin: origin,
                                  destination: destination,
@@ -167,7 +172,8 @@ public enum Karte {
                                  title: title,
                                  message: message,
                                  cancel: cancel,
-                                 style: style)
+                                 style: style,
+                                 completion: completion)
 
         OperationQueue.main.addOperation {
             viewcontroller.present(alert, animated: true, completion: nil)
