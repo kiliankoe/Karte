@@ -117,7 +117,7 @@ public enum Karte {
                                     title: String? = nil,
                                     message: String? = nil,
                                     cancel: String = "Cancel",
-                                    style: UIAlertControllerStyle = .actionSheet,
+                                    style: UIAlertController.Style = .actionSheet,
                                     completion: ((App) -> Void)? = nil)
         -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
@@ -163,7 +163,7 @@ public enum Karte {
                                      title: String? = nil,
                                      message: String? = nil,
                                      cancel: String = "Cancel",
-                                     style: UIAlertControllerStyle = .actionSheet,
+                                     style: UIAlertController.Style = .actionSheet,
                                      completion: ((App) -> Void)? = nil) {
 
         let alert = createPicker(origin: origin,
