@@ -1,5 +1,5 @@
 //
-//  Location.swift
+//  KarteLocation.swift
 //  Karte
 //
 //  Created by Kilian Költzsch on 13.04.17.
@@ -8,7 +8,7 @@
 
 import CoreLocation
 
-public struct Location {
+public struct KarteLocation {
     public let coordinate: CLLocationCoordinate2D
     public let name: String?
     public let address: String?

@@ -28,7 +28,7 @@ Launch a specific app with directions.
 
 ```swift
 let coordinate = CLLocationCoordinate2D(latitude: 52.5162746, longitude: 13.3755153)
-let berlin = Location(name: "Brandenburger Tor Berlin", coordinate: coordinate)
+let berlin = KarteLocation(name: "Brandenburger Tor Berlin", coordinate: coordinate)
 Karte.launch(app: .googleMaps, destination: berlin)
 ```
 

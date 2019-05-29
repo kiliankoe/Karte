@@ -32,7 +32,7 @@ extension LocationRepresentable {
     }
 }
 
-extension Location: LocationRepresentable {
+extension KarteLocation: LocationRepresentable {
     public var latitude: Double {
         return self.coordinate.latitude
     }

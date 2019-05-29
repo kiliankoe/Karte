@@ -14,24 +14,24 @@ import struct CoreLocation.CLLocationCoordinate2D
 
 class KarteTests: XCTestCase {
 
-    var berlin: Location!
-    var dresden: Location!
+    var berlin: KarteLocation!
+    var dresden: KarteLocation!
 
-    var anonymousLocation: Location!
-    var namedLocation: Location!
-    var fullLocation: Location!
+    var anonymousLocation: KarteLocation!
+    var namedLocation: KarteLocation!
+    var fullLocation: KarteLocation!
 
     override func setUp() {
         let berlinCoordinate = CLLocationCoordinate2D(latitude: 52.5205356, longitude: 13.4124354)
-        self.berlin = Location(name: "Berlin", coordinate: berlinCoordinate)
+        self.berlin = KarteLocation(name: "Berlin", coordinate: berlinCoordinate)
 
         let dresdenCoordinate = CLLocationCoordinate2D(latitude: 51.0527491, longitude: 13.7383025)
-        self.dresden = Location(name: "Dresden", coordinate: dresdenCoordinate)
+        self.dresden = KarteLocation(name: "Dresden", coordinate: dresdenCoordinate)
 
         let dummyCoordinate = CLLocationCoordinate2D(latitude: 10.0, longitude: 10.0)
-        self.anonymousLocation = Location(coordinate: dummyCoordinate)
-        self.namedLocation = Location(name: "Named Location", coordinate: dummyCoordinate)
-        self.fullLocation = Location(name: "Full Location",
+        self.anonymousLocation = KarteLocation(coordinate: dummyCoordinate)
+        self.namedLocation = KarteLocation(name: "Named Location", coordinate: dummyCoordinate)
+        self.fullLocation = KarteLocation(name: "Full Location",
                                      address: "Location Address",
                                      coordinate: dummyCoordinate)
     }
