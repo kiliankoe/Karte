@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name        = "Karte"
-  s.version     = "2.2.1"
+  s.version     = "3.0.0"
   s.summary     = "Conveniently launch directions in other iOS map apps"
   s.description = <<-DESC
     Small library for opening a location or route in other popular iOS apps.
