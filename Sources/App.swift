@@ -6,7 +6,7 @@
 //  Copyright © 2017 Karte. All rights reserved.
 //
 
-public enum App: String {
+public enum App: String, CaseIterable {
     case appleMaps
     case googleMaps // https://developers.google.com/maps/documentation/ios/urlscheme
     case citymapper
@@ -19,20 +19,9 @@ public enum App: String {
     case yandex
     case moovit
 
+    @available(*, unavailable, renamed: "allCases")
     static var all: [App] {
-        return [
-            .appleMaps,
-            .googleMaps,
-            .citymapper,
-            .transit,
-            .lyft,
-            .uber,
-            .navigon,
-            .waze,
-            .dbnavigator,
-            .yandex,
-            .moovit
-        ]
+        fatalError()
     }
 
     var urlScheme: String {

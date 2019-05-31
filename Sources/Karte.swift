@@ -122,7 +122,7 @@ public enum Karte {
         -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
 
-        App.all
+        App.allCases
             .filter(self.isInstalled)
             .filter { $0.supports(mode: mode) } // defaults to true if mode is nil
             .map { app in
