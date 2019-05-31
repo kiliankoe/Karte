@@ -6,6 +6,8 @@
 //  Copyright © 2017 Karte. All rights reserved.
 //
 
-public enum KarteError: Error {
-    case unsupportedMode
+extension Karte {
+    public enum Error: Swift.Error {
+        case unsupportedMode
+    }
 }

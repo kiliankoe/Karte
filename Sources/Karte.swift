@@ -58,7 +58,7 @@ public enum Karte {
                                 destination: LocationRepresentable,
                                 mode: Mode?) throws {
         guard app != .appleMaps else {
-            guard app.supports(mode: mode) else { throw KarteError.unsupportedMode }
+            guard app.supports(mode: mode) else { throw Karte.Error.unsupportedMode }
             let mapItems = [origin, destination].compactMap { $0?.mapItem }
             // Fallback for the default driving mode on versions before iOS 10
             let defaultDirectionMode: String
@@ -79,7 +79,7 @@ public enum Karte {
                                                 destination: destination,
                                                 mode: mode)
         else {
-            throw KarteError.unsupportedMode
+            throw Karte.Error.unsupportedMode
         }
 
         guard let url = URL(string: queryString) else {
