@@ -77,16 +77,7 @@ The section to add to your `Info.plist` should look like this:
 
 ## Installation
 
-Karte is available through Carthage/Punic and Cocoapods, take your pick.
-
-```ruby
-# Carthage
-github "kiliankoe/Karte"
-
-# Cocoapods
-pod 'Karte'
-```
-
+Karte is available through SwiftPM. Just copy `https://github.com/kiliankoe/Karte` into Xcode ✌️ 
 
 
 ## Credits
