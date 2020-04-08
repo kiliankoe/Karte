@@ -4,8 +4,7 @@
 </h1>
 
 [![Travis](https://img.shields.io/travis/kiliankoe/Karte.svg?style=flat-square)](https://travis-ci.org/kiliankoe/Karte)
-[![Version](https://img.shields.io/cocoapods/v/Karte.svg?style=flat-square)](http://cocoapods.org/pods/Karte)
-[![Platform](https://img.shields.io/cocoapods/p/Karte.svg?style=flat-square)](http://cocoapods.org/pods/Karte)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/kiliankoe/karte?style=flat-square)](https://github.com/kiliankoe/Karte/releases)
 
 Small library for opening a location or route in other popular iOS navigation apps.
 
