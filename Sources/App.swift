@@ -105,8 +105,15 @@ extension Karte {
                 // Apple Maps gets special handling, since it uses System APIs
                 return nil
             case .googleMaps:
-                parameters.set("saddr", origin?.coordString)
-                parameters.set("daddr", destination.coordString)
+                if let origin = origin {
+                    parameters.set("saddr", origin.coordString)
+                    parameters.set("daddr", destination.coordString)
+                } else if let destinationAddress = destination.address {
+                    parameters.set("daddr", destinationAddress)
+                    parameters.set("center", destination.coordString)
+                } else {
+                    parameters.set("daddr", destination.coordString)
+                }
 
                 let modeIdentifier = mode?.identifier(for: self) as? String
                 parameters.set("directionsmode", modeIdentifier)
