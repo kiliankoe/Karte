@@ -118,7 +118,8 @@ public enum Karte {
                                     message: String? = nil,
                                     cancel: String = "Cancel",
                                     style: UIAlertController.Style = .actionSheet,
-                                    completion: ((App) -> Void)? = nil)
+                                    completion: ((App) -> Void)? = nil,
+                                    cancelAction: (() -> Void)? = nil)
         -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
 
@@ -136,7 +137,9 @@ public enum Karte {
             }
             .forEach { alert.addAction($0) }
 
-        alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: { _ in
+                cancelAction?()
+            }))
 
         return alert
     }
@@ -164,7 +167,8 @@ public enum Karte {
                                      message: String? = nil,
                                      cancel: String = "Cancel",
                                      style: UIAlertController.Style = .actionSheet,
-                                     completion: ((App) -> Void)? = nil) {
+                                     completion: ((App) -> Void)? = nil,
+                                     cancelAction: (() -> Void)? = nil) {
 
         let alert = createPicker(origin: origin,
                                  destination: destination,
@@ -173,7 +177,8 @@ public enum Karte {
                                  message: message,
                                  cancel: cancel,
                                  style: style,
-                                 completion: completion)
+                                 completion: completion,
+                                 cancelAction: cancelAction)
 
         OperationQueue.main.addOperation {
             viewcontroller.present(alert, animated: true, completion: nil)
