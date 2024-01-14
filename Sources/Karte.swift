@@ -87,11 +87,7 @@ public enum Karte {
             return
         }
 
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
+        UIApplication.shared.open(url)
     }
 
     /// Return a `UIAlertController` with all supported apps the device has installed to offer an

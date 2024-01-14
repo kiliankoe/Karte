@@ -1,11 +1,13 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.9
 
 import PackageDescription
 
 let package = Package(
     name: "Karte",
     platforms: [
-        .iOS(.v10)
+        .iOS(.v12),
+        .visionOS(.v1),
+        .macCatalyst(.v14)
     ],
     products: [
         .library(
